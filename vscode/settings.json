@@ -11,7 +11,6 @@
   "terminal.integrated.fontFamily": "MesloLGS NF",
   "editor.linkedEditing": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
-  "window.zoomLevel": 0.5,
   "launch": {},
   "[json]": {},
   "editor.minimap.enabled": false,
@@ -24,90 +23,191 @@
   "vim.hlsearch": true,
   "vim.normalModeKeyBindingsNonRecursive": [
     {
-      "before": ["leader", "n", "h"],
-      "commands": [":nohl"]
+      "before": [
+        "leader",
+        "n",
+        "h"
+      ],
+      "commands": [
+        ":nohl"
+      ]
     },
     {
-      "before": ["<S-h>"],
-      "commands": [":bprevious"]
+      "before": [
+        "<S-h>"
+      ],
+      "commands": [
+        ":bprevious"
+      ]
     },
     {
-      "before": ["<S-l>"],
-      "commands": [":bnext"]
+      "before": [
+        "<S-l>"
+      ],
+      "commands": [
+        ":bnext"
+      ]
     },
     {
-      "before": ["leader", "s", "v"],
-      "commands": [":vsplit"]
+      "before": [
+        "leader",
+        "s",
+        "v"
+      ],
+      "commands": [
+        ":vsplit"
+      ]
     },
     {
-      "before": ["leader", "s", "h"],
-      "commands": [":split"]
+      "before": [
+        "leader",
+        "s",
+        "h"
+      ],
+      "commands": [
+        ":split"
+      ]
     },
     {
-      "before": ["<C-h>"],
-      "commands": ["workbench.action.focusLeftGroup"]
+      "before": [
+        "<C-h>"
+      ],
+      "commands": [
+        "workbench.action.focusLeftGroup"
+      ]
     },
     {
-      "before": ["<C-j>"],
-      "commands": ["workbench.action.focusBelowGroup"]
+      "before": [
+        "<C-j>"
+      ],
+      "commands": [
+        "workbench.action.focusBelowGroup"
+      ]
     },
     {
-      "before": ["<C-k>"],
-      "commands": ["workbench.action.focusAboveGroup"]
+      "before": [
+        "<C-k>"
+      ],
+      "commands": [
+        "workbench.action.focusAboveGroup"
+      ]
     },
     {
-      "before": ["<C-l>"],
-      "commands": ["workbench.action.focusRightGroup"]
+      "before": [
+        "<C-l>"
+      ],
+      "commands": [
+        "workbench.action.focusRightGroup"
+      ]
     },
     {
-      "before": ["[", "d"],
-      "commands": ["editor.action.marker.prev"]
+      "before": [
+        "[",
+        "d"
+      ],
+      "commands": [
+        "editor.action.marker.prev"
+      ]
     },
     {
-      "before": ["]", "d"],
-      "commands": ["editor.action.marker.next"]
+      "before": [
+        "]",
+        "d"
+      ],
+      "commands": [
+        "editor.action.marker.next"
+      ]
     },
     {
-      "before": ["<leader>", "c", "a"],
-      "commands": ["editor.action.quickFix"]
+      "before": [
+        "<leader>",
+        "c",
+        "a"
+      ],
+      "commands": [
+        "editor.action.quickFix"
+      ]
     },
     {
-      "before": ["leader", "f", "s"],
-      "commands": ["workbench.action.findInFiles"]
+      "before": [
+        "leader",
+        "f",
+        "s"
+      ],
+      "commands": [
+        "workbench.action.findInFiles"
+      ]
     },
     {
-      "before": ["leader", "f", "f"],
-      "commands": ["workbench.action.quickOpen"]
+      "before": [
+        "leader",
+        "f",
+        "f"
+      ],
+      "commands": [
+        "workbench.action.quickOpen"
+      ]
     },
     {
-      "before": ["leader", "p"],
-      "commands": ["editor.action.formatDocument"]
+      "before": [
+        "leader",
+        "p"
+      ],
+      "commands": [
+        "editor.action.formatDocument"
+      ]
     },
     {
-      "before": ["g", "h"],
-      "commands": ["editor.action.showDefinitionPreviewHover"]
+      "before": [
+        "g",
+        "h"
+      ],
+      "commands": [
+        "editor.action.showDefinitionPreviewHover"
+      ]
     }
   ],
   "vim.visualModeKeyBindings": [
     {
-      "before": ["<"],
-      "commands": ["editor.action.outdentLines"]
+      "before": [
+        "<"
+      ],
+      "commands": [
+        "editor.action.outdentLines"
+      ]
     },
     {
-      "before": [">"],
-      "commands": ["editor.action.indentLines"]
+      "before": [
+        ">"
+      ],
+      "commands": [
+        "editor.action.indentLines"
+      ]
     },
     {
-      "before": ["J"],
-      "commands": ["editor.action.moveLinesDownAction"]
+      "before": [
+        "J"
+      ],
+      "commands": [
+        "editor.action.moveLinesDownAction"
+      ]
     },
     {
-      "before": ["K"],
-      "commands": ["editor.action.moveLinesUpAction"]
+      "before": [
+        "K"
+      ],
+      "commands": [
+        "editor.action.moveLinesUpAction"
+      ]
     },
     {
-      "before": ["leader", "c"],
-      "commands": ["editor.action.commentLine"]
+      "before": [
+        "leader",
+        "c"
+      ],
+      "commands": [
+        "editor.action.commentLine"
+      ]
     }
   ],
   "go.toolsManagement.autoUpdate": true,
@@ -124,11 +224,19 @@
   ],
   "workbench.startupEditor": "none",
   "git.enableSmartCommit": true,
-  "cursor.cpp.disabledLanguages": ["plaintext", "markdown", "scminput"],
-  "github.copilot.enable": {
-    "*": false,
-    "plaintext": false,
-    "markdown": false,
-    "scminput": false
-  }
+  "cursor.cpp.disabledLanguages": [
+    "plaintext",
+    "markdown",
+    "scminput"
+  ],
+  "makefile.configureOnOpen": true,
+  "files.watcherExclude": {
+    "**/.bloop": true,
+    "**/.metals": true
+  },
+  "workbench.colorTheme": "Default Light+",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "explorer.confirmDragAndDrop": false,
+  "explorer.confirmDelete": false,
+  "explorer.confirmPasteNative": false
 }

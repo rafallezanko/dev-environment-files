@@ -48,7 +48,7 @@
   {
     "key": "shift+a",
     "command": "explorer.newFolder",
-    "when": "explorerViewletFocus"
+    "when": "explorerViewletFocus && !inputFocus"
   },
   {
     "key": "cmd+shift+n",
@@ -68,5 +68,68 @@
   {
     "key": "ctrl+z",
     "command": "workbench.action.toggleZenMode"
+  },
+  {
+    "key": "j",
+    "command": "selectNextSuggestion",
+    "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && vim.mode != 'Insert'"
+  },
+  {
+    "key": "k",
+    "command": "selectPrevSuggestion",
+    "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && vim.mode != 'Insert'"
+  },
+  {
+    "key": "ctrl+k",
+    "when": "codeActionMenuVisible",
+    "command": "selectPrevCodeAction"
+  },
+  {
+    "key": "ctrl+j",
+    "when": "codeActionMenuVisible",
+    "command": "selectNextCodeAction"
+  },
+  {
+    "key": "cmd+e",
+    "command": "composerMode.background"
+  },
+  // VIM SCROLLING WITH CENTERING
+  {
+    "key": "ctrl+d",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        {
+          "command": "vim.remap",
+          "args": {
+            "after": [
+              "<C-d>",
+              "z",
+              "z"
+            ]
+          }
+        }
+      ]
+    },
+    "when": "vim.active && vim.mode != 'Insert'"
+  },
+  {
+    "key": "ctrl+u",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        {
+          "command": "vim.remap",
+          "args": {
+            "after": [
+              "<C-u>",
+              "z",
+              "z"
+            ]
+          }
+        }
+      ]
+    },
+    "when": "vim.active && vim.mode != 'Insert'"
   }
 ]
