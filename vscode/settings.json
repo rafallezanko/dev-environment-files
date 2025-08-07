@@ -103,6 +103,16 @@
     },
     {
       "before": [
+        "<leader>",
+        "e",
+        "e"
+      ],
+      "commands": [
+        "workbench.files.action.focusFilesExplorer"
+      ]
+    },
+    {
+      "before": [
         "[",
         "d"
       ],
@@ -212,7 +222,6 @@
     }
   ],
   "go.toolsManagement.autoUpdate": true,
-  "workbench.activityBar.location": "hidden",
   "git.autofetch": true,
   "git.confirmSync": false,
   "roo-cline.allowedCommands": [
@@ -223,7 +232,7 @@
     "git diff",
     "git show"
   ],
-  "workbench.startupEditor": "none",
+  "workbench.startupEditor": "readme",
   "git.enableSmartCommit": true,
   "cursor.cpp.disabledLanguages": [
     "plaintext",
@@ -235,9 +244,14 @@
     "**/.bloop": true,
     "**/.metals": true
   },
-  "workbench.colorTheme": "Default Light+",
   "diffEditor.ignoreTrimWhitespace": false,
   "explorer.confirmDragAndDrop": false,
   "explorer.confirmDelete": false,
-  "explorer.confirmPasteNative": false
+  "explorer.confirmPasteNative": false,
+  "vim.highlightedyank.enable": true,
+  "vim.history": 70,
+  "workbench.activityBar.location": "hidden",
+  "workbench.colorTheme": "Default Light+",
+  "workbench.editor.enablePreview": false,
+  "window.autoDetectColorScheme": true
 }
