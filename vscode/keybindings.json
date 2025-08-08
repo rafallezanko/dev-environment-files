@@ -2,27 +2,27 @@
 [
   // NAVIGATION
   {
-    "key": "ctrl+shift+a",
     "command": "workbench.action.terminal.focusNext",
+    "key": "ctrl+shift+a",
     "when": "terminalFocus"
   },
   {
-    "key": "ctrl+shift+b",
     "command": "workbench.action.terminal.focusPrevious",
+    "key": "ctrl+shift+b",
     "when": "terminalFocus"
   },
   {
-    "key": "ctrl+shift+j",
-    "command": "workbench.action.togglePanel"
+    "command": "workbench.action.togglePanel",
+    "key": "ctrl+shift+j"
   },
   {
-    "key": "ctrl+shift+n",
     "command": "workbench.action.terminal.new",
+    "key": "ctrl+shift+n",
     "when": "terminalFocus"
   },
   {
-    "key": "ctrl+shift+w",
     "command": "workbench.action.terminal.kill",
+    "key": "ctrl+shift+w",
     "when": "terminalFocus"
   },
   // FILE TREE
@@ -36,8 +36,8 @@
     "when": "editorTextFocus"
   },
   {
-    "key": "a",
     "command": "explorer.newFile",
+    "key": "a",
     "when": "filesExplorerFocus && !inputFocus"
   },
   {
@@ -46,13 +46,13 @@
     "when": "filesExplorerFocus && !inputFocus"
   },
   {
-    "key": "shift+a",
     "command": "explorer.newFolder",
+    "key": "shift+a",
     "when": "explorerViewletFocus && !inputFocus"
   },
   {
-    "key": "cmd+shift+n",
     "command": "workbench.action.newWindow",
+    "key": "cmd+shift+n",
     "when": "!explorerViewletFocus"
   },
   {
@@ -62,74 +62,74 @@
   },
   // EXTRA
   {
-    "key": "ctrl+shift+5",
-    "command": "editor.emmet.action.matchTag"
+    "command": "editor.emmet.action.matchTag",
+    "key": "ctrl+shift+5"
   },
   {
-    "key": "ctrl+z",
-    "command": "workbench.action.toggleZenMode"
+    "command": "workbench.action.toggleZenMode",
+    "key": "ctrl+z"
   },
   {
-    "key": "j",
     "command": "selectNextSuggestion",
+    "key": "j",
     "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && vim.mode != 'Insert'"
   },
   {
-    "key": "k",
     "command": "selectPrevSuggestion",
+    "key": "k",
     "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && vim.mode != 'Insert'"
   },
   {
+    "command": "selectPrevCodeAction",
     "key": "ctrl+k",
-    "when": "codeActionMenuVisible",
-    "command": "selectPrevCodeAction"
+    "when": "codeActionMenuVisible"
   },
   {
+    "command": "selectNextCodeAction",
     "key": "ctrl+j",
-    "when": "codeActionMenuVisible",
-    "command": "selectNextCodeAction"
+    "when": "codeActionMenuVisible"
   },
   {
-    "key": "cmd+e",
-    "command": "composerMode.background"
+    "command": "composerMode.background",
+    "key": "cmd+e"
   },
   // VIM SCROLLING WITH CENTERING
   {
-    "key": "ctrl+d",
-    "command": "runCommands",
     "args": {
       "commands": [
         {
-          "command": "vim.remap",
           "args": {
             "after": [
               "<C-d>",
               "z",
               "z"
             ]
-          }
+          },
+          "command": "vim.remap"
         }
       ]
     },
+    "command": "runCommands",
+    "key": "ctrl+d",
     "when": "vim.active && vim.mode != 'Insert'"
   },
   {
-    "key": "ctrl+u",
-    "command": "runCommands",
     "args": {
       "commands": [
         {
-          "command": "vim.remap",
           "args": {
             "after": [
               "<C-u>",
               "z",
               "z"
             ]
-          }
+          },
+          "command": "vim.remap"
         }
       ]
     },
+    "command": "runCommands",
+    "key": "ctrl+u",
     "when": "vim.active && vim.mode != 'Insert'"
   }
 ]
