@@ -251,7 +251,7 @@
   "workbench.activityBar.location": "hidden",
   "workbench.colorTheme": "Default Light+",
   "workbench.editor.enablePreview": false,
-  "workbench.iconTheme": "material-icon-theme",
+  "workbench.layoutControl.enabled": false,
   "workbench.startupEditor": "readme",
   "zenMode.hideLineNumbers": false
 }
