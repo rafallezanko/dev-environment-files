@@ -1,27 +1,52 @@
 {
-  "editor.formatOnSave": false,
   "[go]": {
     "editor.codeActionsOnSave": {
       "source.organizeImports": "never",
-      "source.sortImports": "never",
-      "source.removeUnusedImports": "never"
+      "source.removeUnusedImports": "never",
+      "source.sortImports": "never"
     }
   },
-  "editor.suggest.insertMode": "replace",
-  "terminal.integrated.fontFamily": "MesloLGS NF",
+  "[json]": {},
+  "breadcrumbs.enabled": false,
+  "cursor.cpp.disabledLanguages": [
+    "plaintext",
+    "markdown",
+    "scminput"
+  ],
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.formatOnSave": false,
+  "editor.lineNumbers": "relative",
   "editor.linkedEditing": true,
+  "editor.minimap.enabled": false,
+  "editor.suggest.insertMode": "replace",
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "explorer.confirmPasteNative": false,
+  "files.watcherExclude": {
+    "**/.bloop": true,
+    "**/.metals": true
+  },
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "go.toolsManagement.autoUpdate": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
   "launch": {},
-  "[json]": {},
-  "editor.minimap.enabled": false,
-  "breadcrumbs.enabled": false,
-  "workbench.iconTheme": "material-icon-theme",
+  "makefile.configureOnOpen": true,
+  "roo-cline.allowedCommands": [
+    "npm test",
+    "npm install",
+    "tsc",
+    "git log",
+    "git diff",
+    "git show"
+  ],
+  "terminal.integrated.fontFamily": "MesloLGS NF",
   "update.showReleaseNotes": false,
-  "zenMode.hideLineNumbers": false,
-  "editor.lineNumbers": "relative",
-  "vim.leader": "<Space>",
+  "vim.highlightedyank.enable": true,
+  "vim.history": 70,
   "vim.hlsearch": true,
-  "vim.useSystemClipboard": true,
+  "vim.leader": "<Space>",
   "vim.normalModeKeyBindingsNonRecursive": [
     {
       "before": [
@@ -178,6 +203,7 @@
       ]
     }
   ],
+  "vim.useSystemClipboard": true,
   "vim.visualModeKeyBindings": [
     {
       "before": [
@@ -221,37 +247,11 @@
       ]
     }
   ],
-  "go.toolsManagement.autoUpdate": true,
-  "git.autofetch": true,
-  "git.confirmSync": false,
-  "roo-cline.allowedCommands": [
-    "npm test",
-    "npm install",
-    "tsc",
-    "git log",
-    "git diff",
-    "git show"
-  ],
-  "workbench.startupEditor": "readme",
-  "git.enableSmartCommit": true,
-  "cursor.cpp.disabledLanguages": [
-    "plaintext",
-    "markdown",
-    "scminput"
-  ],
-  "makefile.configureOnOpen": true,
-  "files.watcherExclude": {
-    "**/.bloop": true,
-    "**/.metals": true
-  },
-  "diffEditor.ignoreTrimWhitespace": false,
-  "explorer.confirmDragAndDrop": false,
-  "explorer.confirmDelete": false,
-  "explorer.confirmPasteNative": false,
-  "vim.highlightedyank.enable": true,
-  "vim.history": 70,
+  "window.autoDetectColorScheme": true,
   "workbench.activityBar.location": "hidden",
   "workbench.colorTheme": "Default Light+",
   "workbench.editor.enablePreview": false,
-  "window.autoDetectColorScheme": true
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.startupEditor": "readme",
+  "zenMode.hideLineNumbers": false
 }
