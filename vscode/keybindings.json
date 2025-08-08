@@ -31,11 +31,6 @@
     "key": "ctrl+e"
   },
   {
-    "command": "workbench.files.action.focusFilesExplorer",
-    "key": "ctrl+e",
-    "when": "editorTextFocus"
-  },
-  {
     "command": "explorer.newFile",
     "key": "a",
     "when": "filesExplorerFocus && !inputFocus"
