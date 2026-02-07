@@ -7,15 +7,13 @@ return {
         "ts_ls",
         "html",
         "cssls",
-        "tailwindcss",
-        "svelte",
         "lua_ls",
         "graphql",
-        "emmet_ls",
-        "prismals",
         "pyright",
-        "eslint",
         "ruff",
+        "gradle_ls",
+        "jdtls",
+        "kotlin_lsp",
       },
     },
     dependencies = {
@@ -43,11 +41,12 @@ return {
         "isort", -- python formatter
         "black", -- python formatter
         "pylint",
-        "eslint_d",
+        "google-java-format",
       },
     },
     dependencies = {
       "williamboman/mason.nvim",
     },
   },
+  { "nvim-java/nvim-java" },
 }
