@@ -2,18 +2,7 @@ return {
   "nvim-treesitter/nvim-treesitter-textobjects",
   lazy = true,
   config = function()
-    local ok, treesitter = pcall(require, "nvim-treesitter.config")
-    if not ok then
-      local ok_old, treesitter_old = pcall(require, "nvim-treesitter.configs")
-      if not ok_old then
-        error(
-          "Failed to load nvim-treesitter module. Tried 'nvim-treesitter.config' and 'nvim-treesitter.configs'."
-        )
-      end
-      treesitter = treesitter_old
-    end
-
-    treesitter.setup({
+    require("nvim-treesitter.config").setup({
       textobjects = {
         select = {
           enable = true,
