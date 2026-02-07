@@ -3,8 +3,17 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   build = ":TSUpdate",
   config = function()
-    -- import nvim-treesitter plugin
-    local treesitter = require("nvim-treesitter.configs")
+    -- import nvim-treesitter plugin (new and old module names)
+    local ok, treesitter = pcall(require, "nvim-treesitter.config")
+    if not ok then
+      local ok_old, treesitter_old = pcall(require, "nvim-treesitter.configs")
+      if not ok_old then
+        error(
+          "Failed to load nvim-treesitter module. Tried 'nvim-treesitter.config' and 'nvim-treesitter.configs'."
+        )
+      end
+      treesitter = treesitter_old
+    end
 
     -- configure treesitter
     treesitter.setup({ -- enable syntax highlighting
@@ -31,7 +40,6 @@ return {
         "lua",
         "vim",
         "dockerfile",
-        "gitignore",
         "query",
         "vimdoc",
         "c",
