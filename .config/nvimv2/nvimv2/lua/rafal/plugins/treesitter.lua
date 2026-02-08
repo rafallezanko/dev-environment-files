@@ -15,6 +15,7 @@ local langs = {
   "gomod",
   "gowork",
   "gosum",
+  "python",
   "bash",
   "lua",
   "vim",
