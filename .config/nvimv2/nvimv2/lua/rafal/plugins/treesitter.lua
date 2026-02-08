@@ -1,48 +1,54 @@
+local langs = {
+  "json",
+  "javascript",
+  "typescript",
+  "tsx",
+  "yaml",
+  "html",
+  "css",
+  "prisma",
+  "markdown",
+  "markdown_inline",
+  "svelte",
+  "graphql",
+  "go",
+  "gomod",
+  "gowork",
+  "gosum",
+  "bash",
+  "lua",
+  "vim",
+  "dockerfile",
+  "query",
+  "vimdoc",
+  "c",
+}
+
 return {
   "nvim-treesitter/nvim-treesitter",
+  branch = "main",
   event = { "BufReadPre", "BufNewFile" },
-  build = ":TSUpdate",
+  build = function()
+    require("nvim-treesitter").install(langs):wait()
+  end,
   config = function()
-    require("nvim-treesitter.config").setup({
-      highlight = {
-        enable = true,
-      },
-      -- enable indentation
-      indent = { enable = true },
-      -- ensure these language parsers are installed
-      ensure_installed = {
-        "json",
-        "javascript",
-        "typescript",
-        "tsx",
-        "yaml",
-        "html",
-        "css",
-        "prisma",
-        "markdown",
-        "markdown_inline",
-        "svelte",
-        "graphql",
-        "bash",
-        "lua",
-        "vim",
-        "dockerfile",
-        "query",
-        "vimdoc",
-        "c",
-      },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<C-space>",
-          node_incremental = "<C-space>",
-          scope_incremental = false,
-          node_decremental = "<bs>",
-        },
-      },
-    })
-
-    -- use bash parser for zsh files
     vim.treesitter.language.register("bash", "zsh")
+
+    vim.api.nvim_create_autocmd("FileType", {
+      callback = function()
+        local ft = vim.bo.filetype
+        if ft == "" then
+          return
+        end
+
+        local lang = vim.treesitter.language.get_lang(ft) or ft
+        if not vim.list_contains(langs, lang) then
+          return
+        end
+
+        vim.treesitter.start()
+        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      end,
+    })
   end,
 }

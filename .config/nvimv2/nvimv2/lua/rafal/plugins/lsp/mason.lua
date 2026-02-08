@@ -11,6 +11,7 @@ return {
         "graphql",
         "pyright",
         "ruff",
+        "gopls",
         "gradle_ls",
         "jdtls",
         "kotlin_lsp",
