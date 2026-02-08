@@ -21,3 +21,8 @@ keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" 
 keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  go to next tab
 keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
 keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
+
+-- testing
+keymap.set("n", "<leader>tr", "<cmd>Neotest run<CR>", { desc = "[t]ests [r]" })
+keymap.set("n", "<leader>ti", "<cmd>Neotest output<CR>", { desc = "[t]ests output [i]nformation" })
+keymap.set("n", "<leader>ts", "<cmd>Neotest summary<CR>", { desc = "[t]ests [s]ummary" })
