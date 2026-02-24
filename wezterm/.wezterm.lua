@@ -116,7 +116,7 @@ local config = {
 			mods = "CMD|SHIFT",
 			action = wezterm.action_callback(function(window, pane)
 				-- Otwórz nvim
-				pane:send_text("v\n")
+				pane:send_text("nvim\n")
 
 				-- Stwórz panel po prawej (30%) i odpal Claude
 				local claude_pane = pane:split({ direction = "Right", size = 0.3 })
