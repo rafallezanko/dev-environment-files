@@ -1,16 +1,6 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
--- 1. PANCERNE ŁADOWANIE PLUGINU
--- Pobieramy ścieżkę do Twojego katalogu domowego
-local home = wezterm.home_dir
--- Dodajemy ścieżkę do pluginu do wyszukiwarki Lua
-package.path = package.path .. ";" .. home .. "/.config/wezterm/plugins/resurrect.wezterm/src/?.lua"
-
--- Próbujemy załadować plugin (używamy pcall, żeby terminal nie wybuchł przy błędzie)
-local ok, resurrect = pcall(require, "init")
-if not ok then
-	wezterm.log_error("Błąd ładowania resurrect: " .. resurrect)
-end
+local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
 
 local function is_vim(pane)
 	-- Sprawdzamy procesy w panelu
@@ -48,11 +38,11 @@ local function split_nav(key, direction)
 end
 
 local config = {
-  front_end = "WebGpu",
+	front_end = "WebGpu",
 	color_scheme = "Catppuccin Macchiato", -- lub Twój ulubiony
 	hide_tab_bar_if_only_one_tab = true,
 
-  -- Ustawienia dla nieaktywnych paneli
+	-- Ustawienia dla nieaktywnych paneli
 	inactive_pane_hsb = {
 		saturation = 0.5, -- Zmniejsza nasycenie kolorów (0.0 = czarno-białe)
 		brightness = 0.4, -- Mocne przyciemnienie (0.0 = całkiem czarne, 1.0 = normalne)
@@ -116,34 +106,45 @@ local config = {
 	},
 }
 
--- 4. OBSŁUGA RESURRECT (Nowe skróty i Auto-save)
-if ok then
-	-- Ręczny zapis: Cmd + Shift + S
-	table.insert(config.keys, {
-		key = "S",
-		mods = "CTRL|SHIFT",
-		action = wezterm.action_callback(function(win, pane)
-			resurrect.save_state(resurrect.workspace_state.get_workspace_state())
-			win:toast_notification("WezTerm", "Stan sesji zapisany!", nil, 3000)
-		end),
-	})
+-- Ręczny zapis: Ctrl + Shift + S
+table.insert(config.keys, {
+	key = "S",
+	mods = "CTRL|SHIFT",
+	action = wezterm.action_callback(function(win, pane)
+		resurrect.state_manager.save_state(resurrect.workspace_state.get_workspace_state())
+		win:toast_notification("WezTerm", "Stan sesji zapisany!", nil, 3000)
+	end),
+})
 
-	-- Przywracanie: Cmd + Shift + R
-	table.insert(config.keys, {
-		key = "R",
-		mods = "CTRL|SHIFT",
-		action = wezterm.action_callback(function(win, pane)
-			resurrect.fuzzy_load(win, pane, function(id, label)
-				id = string.match(id, "([^/]+)$")
-				resurrect.workspace_state.restore_workspace_state(id)
-			end, { title = "Wybierz sesję do przywrócenia" })
-		end),
-	})
+-- Przywracanie: Ctrl + Shift + R
+table.insert(config.keys, {
+	key = "R",
+	mods = "CTRL|SHIFT",
+	action = wezterm.action_callback(function(win, pane)
+		resurrect.fuzzy_loader.fuzzy_load(win, pane, function(id, label)
+			local type = string.match(id, "^([^/]+)")
+			id = string.match(id, "([^/]+)$")
+			id = string.match(id, "(.+)%..+$")
+			local opts = {
+				relative = true,
+				restore_text = true,
+				on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+			}
+			if type == "workspace" then
+				local state = resurrect.state_manager.load_state(id, "workspace")
+				resurrect.workspace_state.restore_workspace(state, opts)
+			elseif type == "window" then
+				local state = resurrect.state_manager.load_state(id, "window")
+				resurrect.window_state.restore_window(pane:window(), state, opts)
+			elseif type == "tab" then
+				local state = resurrect.state_manager.load_state(id, "tab")
+				resurrect.tab_state.restore_tab(pane:tab(), state, opts)
+			end
+		end, { title = "Wybierz sesję do przywrócenia" })
+	end),
+})
 
-	-- AUTOMATYCZNY ZAPIS co 15 minut (900 000 ms)
-	wezterm.time_update_callback(function()
-		resurrect.save_state(resurrect.workspace_state.get_workspace_state())
-	end, 900000)
-end
+-- Automatyczny zapis co 15 minut
+resurrect.state_manager.periodic_save()
 
 return config
