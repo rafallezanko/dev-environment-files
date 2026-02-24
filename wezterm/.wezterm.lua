@@ -77,8 +77,8 @@ local config = {
 
 	-- Ustawienia dla nieaktywnych paneli
 	inactive_pane_hsb = {
-		saturation = 0.5, -- Zmniejsza nasycenie kolorów (0.0 = czarno-białe)
-		brightness = 0.4, -- Mocne przyciemnienie (0.0 = całkiem czarne, 1.0 = normalne)
+		saturation = 0.2, -- Zmniejsza nasycenie kolorów (0.0 = czarno-białe)
+		brightness = 0.1, -- Mocne przyciemnienie (0.0 = całkiem czarne, 1.0 = normalne)
 	},
 
 	keys = {
