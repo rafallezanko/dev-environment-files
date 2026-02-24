@@ -88,6 +88,12 @@ local config = {
 		split_nav("k", "Up"),
 		split_nav("l", "Right"),
 
+		-- Resize panes: Cmd + Ctrl + hjkl
+		{ key = "h", mods = "CMD|CTRL", action = act.AdjustPaneSize({ "Left", 10 }) },
+		{ key = "j", mods = "CMD|CTRL", action = act.AdjustPaneSize({ "Down", 10 }) },
+		{ key = "k", mods = "CMD|CTRL", action = act.AdjustPaneSize({ "Up", 10 }) },
+		{ key = "l", mods = "CMD|CTRL", action = act.AdjustPaneSize({ "Right", 10 }) },
+
 		-- Zoom (Maksymalizacja panelu) pod Alt + Z
 		{ key = "m", mods = "ALT", action = act.TogglePaneZoomState },
 
