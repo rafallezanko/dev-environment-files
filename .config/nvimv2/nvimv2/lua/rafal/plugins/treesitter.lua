@@ -36,6 +36,13 @@ return {
     require("nvim-treesitter").install(langs):wait()
   end,
   config = function()
+    local to_install = vim.tbl_filter(function(lang)
+      return not pcall(vim.treesitter.language.add, lang)
+    end, langs)
+    if #to_install > 0 then
+      require("nvim-treesitter").install(to_install)
+    end
+
     vim.treesitter.language.register("bash", "zsh")
 
     vim.api.nvim_create_autocmd("FileType", {
@@ -50,8 +57,10 @@ return {
           return
         end
 
-        vim.treesitter.start()
-        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        local ok = pcall(vim.treesitter.start)
+        if ok then
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end
       end,
     })
   end,
