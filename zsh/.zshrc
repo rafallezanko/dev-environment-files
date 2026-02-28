@@ -11,3 +11,12 @@ if command -v go >/dev/null 2>&1; then
     *) export PATH="$PATH:$GOPATH/bin" ;;
   esac
 fi
+
+PYTHON_VENV_NAME=".venv"
+PYTHON_VENV_NAMES=($PYTHON_VENV_NAME venv)
+
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+plugins=(git common-aliases python docker gradle)
+
+source $ZSH/oh-my-zsh.sh
