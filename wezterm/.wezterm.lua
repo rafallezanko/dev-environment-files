@@ -39,40 +39,7 @@ end
 
 local config = {
 	front_end = "WebGpu",
-	color_scheme = "Tokyo Night",
-	colors = {
-		background = "#011628",
-		foreground = "#CBE0F0",
-		cursor_bg = "#CBE0F0",
-		cursor_fg = "#011628",
-		cursor_border = "#CBE0F0",
-		selection_bg = "#275378",
-		selection_fg = "#CBE0F0",
-		split = "#547998",
-		tab_bar = {
-			background = "#011423",
-			active_tab = {
-				bg_color = "#011628",
-				fg_color = "#CBE0F0",
-			},
-			inactive_tab = {
-				bg_color = "#011423",
-				fg_color = "#627E97",
-			},
-			inactive_tab_hover = {
-				bg_color = "#143652",
-				fg_color = "#CBE0F0",
-			},
-			new_tab = {
-				bg_color = "#011423",
-				fg_color = "#627E97",
-			},
-			new_tab_hover = {
-				bg_color = "#143652",
-				fg_color = "#CBE0F0",
-			},
-		},
-	},
+	color_scheme = "Catppuccin Macchiato",
 	font_size = 12.5,
 	hide_tab_bar_if_only_one_tab = true,
 
