@@ -73,6 +73,7 @@ local config = {
 			},
 		},
 	},
+	font_size = 12.5,
 	hide_tab_bar_if_only_one_tab = true,
 
 	-- Ustawienia dla nieaktywnych paneli
