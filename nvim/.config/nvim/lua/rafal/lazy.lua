@@ -12,6 +12,9 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({ { import = "rafal.plugins" }, { import = "rafal.plugins.lsp" } }, {
+  git = {
+    timeout = 600,
+  },
   checker = {
     enabled = true,
     notify = false,
