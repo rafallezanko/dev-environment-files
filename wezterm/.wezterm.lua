@@ -88,7 +88,7 @@ local config = {
 
 				-- Stwórz panel po prawej (30%) i odpal Claude
 				local claude_pane = pane:split({ direction = "Right", size = 0.3 })
-				claude_pane:send_text("jclaude.sh\n")
+				claude_pane:send_text("claude\n")
 
 				-- Stwórz terminal pod Claudem
 				claude_pane:split({ direction = "Bottom", size = 0.4 })
