@@ -1,0 +1,17 @@
+layout {
+    pane split_direction="vertical" {
+        // Główny panel (70%) odpala edytor
+        pane size="70%" command="hx" {
+            args "."
+        }
+        
+        // Prawy panel (30%), podzielony w poziomie
+        pane split_direction="horizontal" size="30%" {
+            // Górna część prawego panelu z Twoim skryptem Claude
+            pane size="60%" command="./jclaude.sh"
+            
+            // Dolny terminal (40% z tych 30%)
+            pane size="40%"
+        }
+    }
+}

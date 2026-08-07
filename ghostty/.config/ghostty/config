@@ -15,3 +15,6 @@ keybind = super+ctrl+l=resize_split:right,10
 
 window-show-tab-bar = never
 keybind = cmd+shift+p=text:v\r;new_split:right;text:claude\r;new_split:down
+
+macos-option-as-alt = left
+theme = Catppuccin Macchiato
