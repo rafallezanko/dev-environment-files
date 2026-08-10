@@ -12,21 +12,18 @@ if command -v go >/dev/null 2>&1; then
   esac
 fi
 
-alias zdev='zellij --layout ~/.config/zellij/layouts/dev.kdl attach -c "$(basename "$PWD")"'
-# Funkcja do odpalania środowiska Zellij z układem 70/30
-# zdev() {
-#     # Pobiera nazwę aktualnego folderu jako nazwę sesji
-#     local session_name="$(basename "$PWD")"
-#
-#     # Sprawdza, czy sesja o tej nazwie działa już w tle
-#     if zellij list-sessions 2>/dev/null | grep -q "$session_name"; then
-#         # Jeśli tak -> po prostu się do niej podłącz
-#         zellij attach "$session_name"
-#     else
-#         # Jeśli nie -> stwórz nową od zera, wymuszając układ z pliku
-#         zellij --session "$session_name" --layout ~/.config/zellij/layouts/dev.kdl
-#     fi
-# }
+zdev() {
+    local session_name="$(basename "$PWD")"
+    
+    # Jeśli podasz argument "reset", niszczymy zapisany stan (cache) tej sesji
+    if [[ "$1" == "reset" ]]; then
+        echo "Wyczyszczono pamięć sesji: $session_name. Odpalam świeży układ..."
+        zellij delete-session "$session_name" --force >/dev/null 2>&1
+    fi
+    
+    # Zellij sam zajmie się resztą: podłączy, wskrzesi lub użyje layoutu do nowej sesji
+    zellij --layout ~/.config/zellij/layouts/dev.kdl attach -c "$session_name"
+}
 
 PYTHON_VENV_NAME=".venv"
 PYTHON_VENV_NAMES=($PYTHON_VENV_NAME venv)
