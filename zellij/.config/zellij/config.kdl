@@ -144,7 +144,6 @@ keybinds clear-defaults=true {
         }
     }
     shared_except "locked" {
-        bind "Alt left" { MoveFocusOrTab "left"; }
         bind "Alt down" { MoveFocus "down"; }
         bind "Alt up" { MoveFocus "up"; }
         bind "Alt right" { MoveFocusOrTab "right"; }
@@ -157,7 +156,11 @@ keybinds clear-defaults=true {
         bind "Ctrl g" { SwitchToMode "locked"; }
         bind "Ctrl h" { MoveFocus "left"; }
         bind "Ctrl Super h" { Resize "Increase left"; }
-        bind "Alt h" { MoveFocusOrTab "left"; }
+        bind "Alt left" "Alt h" { 
+            MoveFocusOrTab "left"
+            WriteChars ":reload-all"
+            Write 13
+        }
         bind "Alt i" { MoveTab "left"; }
         bind "Ctrl j" { MoveFocus "down"; }
         bind "Ctrl Super j" { Resize "Increase down"; }
