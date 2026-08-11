@@ -55,3 +55,18 @@ herdr worktree create --branch test
 ```
 
 Layout jest catch-all (`path: ~/.herdr/worktrees` → `dev`), więc dotyczy **każdego** worktree dowolnego repo i nie zawiera nazw projektów. Dotyczy tylko worktree (nie głównego checkoutu repo — tak działa plugin).
+
+### Komendy `hw` i `hdev` (z `zsh/.zshrc`)
+
+- **`hw [branch] [repo]`** — tworzy worktree (repo domyślnie = bieżący katalog) z layoutem `dev` i przeskokiem (`--focus`). Działa od razu po powyższej instalacji.
+- **`hdev [layout]`** — nakłada layout `dev` na **bieżący** workspace herdr, bez worktree. Odpalaj wewnątrz panelu herdr, najlepiej na świeżym oknie (przebudowuje pierwszy tab).
+
+`hdev` używa **standalone CLI** pluginu (`herdr-workspace-manager`), którego **nie ma w repo** — to symlink tworzony per-maszyna. Na każdej nowej maszynie dołóż go po instalacji pluginu:
+
+```zsh
+# wymaga zainstalowanego pluginu (krok 3 wyżej); symlinkuje CLI do ~/.local/bin
+curl -fsSL https://raw.githubusercontent.com/razajamil/herdr-plugin-workspace-manager/main/install.sh | sh
+hash -r   # żeby shell zobaczył nową komendę
+```
+
+`~/.local/bin` na PATH oraz `HERDR_WSM_CONFIG` (żeby standalone CLI znalazł config — serwerowy plugin go nie potrzebuje) ustawia już `zsh/.zshrc`.
