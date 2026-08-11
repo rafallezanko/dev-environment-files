@@ -1,0 +1,27 @@
+onboarding = false
+
+[theme]
+name = "tokyo-night"
+auto_switch = false
+
+# Nawigacja między panelami bez prefixu — ctrl+hjkl (jak w starym wezterm/ghostty).
+# Splity w ghostty są wyłączone, więc te klawisze docierają do herdr.
+# Uwaga: to bindy bezpośrednie (bez prefixu), więc przechwytują ctrl+hjkl w każdym
+# panelu — w shellu tracisz ctrl+l (clear) / ctrl+k, a w helix wchodzą do herdr,
+# nie do edytora. Jak przeszkadza: użyj "prefix+h" itd. zamiast bezpośrednich.
+[keys]
+prefix = "ctrl+b"
+focus_pane_left = "ctrl+h"
+focus_pane_down = "ctrl+j"
+focus_pane_up = "ctrl+k"
+focus_pane_right = "ctrl+l"
+# UWAGA: ctrl+m == Enter (CR) w terminalu. W ghostcie (protokół kitty) herdr
+# powinien je rozróżnić, ale JEŚLI Enter przestanie działać — zmień na
+# "prefix+z", "alt+m" albo "ctrl+alt+m".
+zoom = "ctrl+m"
+
+[ui.toast]
+delivery = "system"
+
+[ui]
+show_agent_labels_on_pane_borders = false

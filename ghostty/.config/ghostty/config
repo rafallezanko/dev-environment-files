@@ -3,18 +3,10 @@ font-family-bold = JetBrainsMono NFM Bold
 font-family-italic = JetBrainsMono NFM Italic
 font-family-bold-italic = JetBrainsMono NFM Bold Italic
 
-keybind = alt+h=goto_split:left
-keybind = alt+j=goto_split:bottom
-keybind = alt+k=goto_split:top
-keybind = alt+l=goto_split:right
-
-keybind = super+ctrl+h=resize_split:left,10
-keybind = super+ctrl+j=resize_split:down,10
-keybind = super+ctrl+k=resize_split:up,10
-keybind = super+ctrl+l=resize_split:right,10
-
+# Panele/splity obsługuje herdr (multiplekser). Ghostty trzymamy jako pojedyncze
+# okno — nie używamy jego splitów, więc nie definiujemy goto_split/resize_split,
+# a ctrl+hjkl przechodzi wprost do herdr (nawigacja panelami).
 window-show-tab-bar = never
-keybind = cmd+shift+p=text:v\r;new_split:right;text:claude\r;new_split:down
 
 macos-option-as-alt = left
 theme = TokyoNight
