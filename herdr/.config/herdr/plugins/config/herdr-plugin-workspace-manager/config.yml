@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/razajamil/herdr-plugin-workspace-manager/main/schema.json
+#
+# herdr workspace-manager — deklaratywny layout aplikowany automatycznie
+# przy `herdr worktree create`.
+#
+# Ścieżka kanoniczna (to samo miejsce, które plugin zgłasza w `herdr plugin list`).
+# W repo dotfiles jako pakiet stow linkowany jest WYŁĄCZNIE ten config.yml —
+# katalogi plugins/ (github/, build) tworzy i zapełnia herdr i zostają poza repo.
+
+layouts:
+  - id: dev
+    tabs:
+      - title: code
+        panes:
+          # główny panel: edytor (zmień na `nvim` / `v .`, jeśli wolisz)
+          - title: editor
+            command: hx .
+          # prawa kolumna ~35%: Claude jako ROZPOZNAWANY agent (status w sidebarze)
+          - title: agent
+            agent: claude
+            agentName: main
+            split: vertical
+            size: "35%"
+            # prompt: Przeczytaj TASK.md i przygotuj plan.   # opcjonalny auto-prompt
+          # pod agentem: zwykły shell
+          - title: shell
+            split: horizontal
+            size: "40%"
+
+workspaces:
+  # Catch-all: KAŻDY worktree (herdr tworzy je pod ~/.herdr/worktrees/<repo>/<branch>)
+  # dostaje layout `dev`. Brak nazw projektów → bezpieczne do commitu. `~` się rozwija.
+  # Jeśli kiedyś zmienisz herdr worktrees dir, zaktualizuj ten prefix.
+  - path: ~/.herdr/worktrees
+    defaultLayout: dev
