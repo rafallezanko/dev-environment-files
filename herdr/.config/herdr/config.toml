@@ -17,6 +17,7 @@ focus_pane_up = "ctrl+k"
 focus_pane_right = "ctrl+l"
 # zoom = maksymalizacja panelu. option+m (macos-option-as-alt=left w ghostty).
 zoom = "alt+m"
+goto = "alt+w"
 
 [ui.toast]
 delivery = "system"
