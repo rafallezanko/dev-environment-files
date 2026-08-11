@@ -25,6 +25,36 @@ zdev() {
     zellij --layout ~/.config/zellij/layouts/dev.kdl attach -c "$session_name"
 }
 
+# hw — herdr worktree: tworzy worktree (z layoutem `dev`) pytając o branch i repo.
+#   hw                   # pyta o branch; repo = bieżący katalog
+#   hw feature-x         # branch z argumentu; repo = bieżący katalog
+#   hw feature-x ~/proj  # jawny branch i repo/lokalizacja
+hw() {
+    local branch="$1" repo="$2"
+
+    [[ -z "$branch" ]] && read "branch?Branch: "
+    if [[ -z "$branch" ]]; then
+        echo "hw: anulowano — brak nazwy brancha." >&2
+        return 1
+    fi
+
+    [[ -z "$repo" ]] && read "repo?Repo/lokalizacja [$PWD]: "
+    repo="${repo:-$PWD}"
+    repo="${repo/#\~/$HOME}"                       # rozwiń ~
+
+    if ! git -C "$repo" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        echo "hw: '$repo' to nie jest repo git." >&2
+        return 1
+    fi
+    if ! git -C "$repo" rev-parse HEAD >/dev/null 2>&1; then
+        echo "hw: repo '$repo' nie ma jeszcze commita (worktree wymaga HEAD)." >&2
+        echo "    np.: git -C \"$repo\" commit --allow-empty -m init" >&2
+        return 1
+    fi
+
+    herdr worktree create --cwd "$repo" --branch "$branch" --focus
+}
+
 PYTHON_VENV_NAME=".venv"
 PYTHON_VENV_NAMES=($PYTHON_VENV_NAME venv)
 
