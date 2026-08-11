@@ -55,6 +55,21 @@ hw() {
     herdr worktree create --cwd "$repo" --branch "$branch" --focus
 }
 
+# CLI pluginu herdr-workspace-manager (symlink z jego install.sh) — używa go hdev.
+export PATH="$HOME/.local/bin:$PATH"
+# Standalone CLI (hdev) nie dostaje ścieżki configu od serwera jak plugin — wskaż
+# ją jawnie. Serwerowy plugin i tak czyta kanoniczną ścieżkę, więc to tylko dla CLI.
+export HERDR_WSM_CONFIG="$HOME/.config/herdr/plugins/config/herdr-plugin-workspace-manager/config.yml"
+
+# hdev — inicjalizuje layout `dev` (editor/claude/shell) w BIEŻĄCYM workspace herdr,
+# BEZ tworzenia worktree. Odpalaj WEWNĄTRZ panelu herdr (czyta HERDR_WORKSPACE_ID z env).
+# Uwaga: przebudowuje pierwszy tab workspace — najlepiej na świeżym oknie/workspace.
+#   hdev            # layout `dev`
+#   hdev <layout>   # inny layout zdefiniowany w config.yml
+hdev() {
+    herdr-workspace-manager apply "${1:-dev}"
+}
+
 PYTHON_VENV_NAME=".venv"
 PYTHON_VENV_NAMES=($PYTHON_VENV_NAME venv)
 
