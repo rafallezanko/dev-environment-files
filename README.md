@@ -12,6 +12,29 @@ cd ~/dotfiles
 stow */
 ```
 
+## helix — LSP
+
+Pakiet `helix/` konfiguruje language servery w `languages.toml`. Binarki trzeba doinstalować osobno:
+
+```zsh
+# edytor
+brew install helix
+
+# Python — ruff (lint/format) + basedpyright (typy, completion) + uv (venvy)
+brew install ruff basedpyright uv
+
+# Go — toolchain + gopls (LSP), golangci-lint (linter), goimports (formatter), dlv (debugger)
+brew install go gopls golangci-lint golangci-lint-langserver
+go install golang.org/x/tools/cmd/goimports@latest
+go install github.com/go-delve/delve/cmd/dlv@latest
+
+# weryfikacja — wszystko powinno być na zielono
+hx --health python
+hx --health go
+```
+
+basedpyright czyta pakiety z venva projektu — w repo bez venva (`uv sync` / `uv venv`) completion obejmuje tylko stdlib.
+
 ## herdr — automatyczny layout dla worktree
 
 Pakiet `herdr/` dostarcza deklaratywny layout dla [herdr](https://herdr.dev): każdy worktree utworzony przez `herdr worktree create` otwiera się z układem `dev` — edytor `hx .` po lewej, Claude w prawej kolumnie (35%), shell pod nim. Robi to plugin **workspace-manager**, którego config linkujemy przez stow do kanonicznej ścieżki `~/.config/herdr/plugins/config/herdr-plugin-workspace-manager/config.yml` (linkowany jest tylko `config.yml` — resztę `~/.config/herdr/` tworzy sam herdr).
