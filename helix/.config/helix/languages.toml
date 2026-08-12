@@ -1,3 +1,23 @@
+# Python: ruff (lint + format + code actions) + basedpyright (typy, completion, goto).
+[language-server.ruff]
+command = "ruff"
+args = ["server"]
+
+[language-server.basedpyright]
+command = "basedpyright-langserver"
+args = ["--stdio"]
+
+# basedpyright domyślnie jest bardzo restrykcyjny ("recommended");
+# "standard" ≈ pyright. Podbij per projekt w pyproject.toml, jak chcesz więcej.
+[language-server.basedpyright.config.basedpyright.analysis]
+typeCheckingMode = "standard"
+
+[[language]]
+name = "python"
+auto-format = true
+formatter = { command = "ruff", args = ["format", "-"] }
+language-servers = ["basedpyright", "ruff"]
+
 [language-server.gopls]
 command = "gopls"
 
