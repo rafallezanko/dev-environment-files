@@ -18,6 +18,15 @@ focus_pane_right = "ctrl+l"
 # zoom = maksymalizacja panelu. option+m (macos-option-as-alt=left w ghostty).
 zoom = "alt+m"
 goto = "alt+w"
+# Skakanie po workspace'ach w dół/górę — alt+j/k (spójne z hjkl na panelach).
+# Bindy bezpośrednie, więc lewy option+j/k nie dociera do shella/helixa (patrz uwaga wyżej).
+next_workspace = "alt+j"
+previous_workspace = "alt+k"
+# Skakanie po agentach (wiersze agentów w sidebarze) — alt+shift+j/k.
+next_agent = "alt+shift+j"
+previous_agent = "alt+shift+k"
+# Bezpośredni skok do agenta 1-9 lewym optionem+cyfra.
+focus_agent = "alt+1..9"
 
 [ui.toast]
 delivery = "system"
