@@ -15,21 +15,37 @@ auto_switch = false
 prefix = "ctrl+b"
 # zoom = maksymalizacja panelu. option+m (macos-option-as-alt=left w ghostty).
 zoom = "alt+m"
-goto = "alt+w"
-# Skakanie po workspace'ach w dół/górę — alt+j/k (spójne z hjkl na panelach).
-# Bindy bezpośrednie, więc lewy option+j/k nie dociera do shella/helixa (patrz uwaga wyżej).
-next_workspace = "alt+j"
-previous_workspace = "alt+k"
+# option+w → fuzzy picker spaces (patrz [[keys.command]] niżej) — flow jak
+# workspace switcher w wezterm. Bez bezpośrednich alt+j/k, więc lewy
+# option+j/k znów dociera do aplikacji w panelu.
+# Wbudowane: goto (panele + spaces) na prefix+g, workspace_picker na prefix+w.
 # Skakanie po agentach (wiersze agentów w sidebarze) — alt+shift+j/k.
 next_agent = "alt+shift+j"
 previous_agent = "alt+shift+k"
 # Bezpośredni skok do agenta 1-9 lewym optionem+cyfra.
 focus_agent = "alt+1..9"
+# Navigate mode (goto, alt+w): j/k skacze po spaces w sidebarze.
+# Domyślnie j/k ruszały panele — panele w tym trybie przechodzą na strzałki
+# (strzałki działają tam zawsze), h/l zostają na panelach lewo/prawo.
+navigate_workspace_down = "j"
+navigate_workspace_up = "k"
+navigate_pane_down = "down"
+navigate_pane_up = "up"
 
 # ctrl+hjkl → plugin herdr-splits (per-maszyna: `herdr plugin install
 # lmilojevicc/herdr-splits.nvim`): nvim w panelu = klawisz idzie do nvim,
 # inaczej = zwykła zmiana panelu. Nvim-side to plugins/herdr-splits.lua.
 # Resize (alt+hjkl z README pluginu) pominięty — alt+j/k zajęte przez workspace'y.
+# alt+w → własny fuzzy picker spaces (fzf, `brew install fzf`): worktree
+# zgrupowane per repo jak w sidebarze, pisanie filtruje, ctrl+j/k po liście.
+[[keys.command]]
+key = "alt+w"
+type = "popup"
+command = "~/.config/herdr/scripts/herdr-space-picker.sh"
+description = "fuzzy switch spaces"
+width = "50%"
+height = "60%"
+
 [[keys.command]]
 key = "ctrl+h"
 type = "plugin_action"

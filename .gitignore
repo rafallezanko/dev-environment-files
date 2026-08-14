@@ -5,6 +5,7 @@
 # Whitelist: trackujemy tylko config.toml i config workspace-managera.
 herdr/.config/herdr/*
 !herdr/.config/herdr/config.toml
+!herdr/.config/herdr/scripts/
 !herdr/.config/herdr/plugins/
 herdr/.config/herdr/plugins/*
 !herdr/.config/herdr/plugins/config/
