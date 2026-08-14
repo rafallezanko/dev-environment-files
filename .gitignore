@@ -1,1 +1,12 @@
 .DS_Store
+
+# Stow linkuje cały ~/.config/herdr do repo, więc herdr pisze tu swój runtime
+# (logi, session.json, plugins.json, zainstalowane pluginy, generowane confy).
+# Whitelist: trackujemy tylko config.toml i config workspace-managera.
+herdr/.config/herdr/*
+!herdr/.config/herdr/config.toml
+!herdr/.config/herdr/plugins/
+herdr/.config/herdr/plugins/*
+!herdr/.config/herdr/plugins/config/
+herdr/.config/herdr/plugins/config/*
+!herdr/.config/herdr/plugins/config/herdr-plugin-workspace-manager/
