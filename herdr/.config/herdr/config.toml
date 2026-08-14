@@ -6,15 +6,13 @@ auto_switch = false
 
 # Nawigacja między panelami bez prefixu — ctrl+hjkl (jak w starym wezterm/ghostty).
 # Splity w ghostty są wyłączone, więc te klawisze docierają do herdr.
-# Uwaga: to bindy bezpośrednie (bez prefixu), więc przechwytują ctrl+hjkl w każdym
-# panelu — w shellu tracisz ctrl+l (clear) / ctrl+k, a w helix wchodzą do herdr,
-# nie do edytora. Jak przeszkadza: użyj "prefix+h" itd. zamiast bezpośrednich.
+# ctrl+hjkl idą przez plugin herdr-splits (patrz [[keys.command]] niżej), który
+# w panelu z neovimem przekazuje klawisz DO nvim (nawigacja po splitach), a nvim
+# na krawędzi oddaje ruch z powrotem do herdr — jeden zestaw klawiszy na całość.
+# W pozostałych panelach działa jak zwykłe focus_pane_* — więc w shellu nadal
+# tracisz ctrl+l (clear) / ctrl+k, a helix nie jest wykrywany (klawisze idą do herdr).
 [keys]
 prefix = "ctrl+b"
-focus_pane_left = "ctrl+h"
-focus_pane_down = "ctrl+j"
-focus_pane_up = "ctrl+k"
-focus_pane_right = "ctrl+l"
 # zoom = maksymalizacja panelu. option+m (macos-option-as-alt=left w ghostty).
 zoom = "alt+m"
 goto = "alt+w"
@@ -27,6 +25,30 @@ next_agent = "alt+shift+j"
 previous_agent = "alt+shift+k"
 # Bezpośredni skok do agenta 1-9 lewym optionem+cyfra.
 focus_agent = "alt+1..9"
+
+# ctrl+hjkl → plugin herdr-splits (per-maszyna: `herdr plugin install
+# lmilojevicc/herdr-splits.nvim`): nvim w panelu = klawisz idzie do nvim,
+# inaczej = zwykła zmiana panelu. Nvim-side to plugins/herdr-splits.lua.
+# Resize (alt+hjkl z README pluginu) pominięty — alt+j/k zajęte przez workspace'y.
+[[keys.command]]
+key = "ctrl+h"
+type = "plugin_action"
+command = "herdr-splits.nav-left"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "plugin_action"
+command = "herdr-splits.nav-down"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "plugin_action"
+command = "herdr-splits.nav-up"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "plugin_action"
+command = "herdr-splits.nav-right"
 
 [ui.toast]
 delivery = "system"

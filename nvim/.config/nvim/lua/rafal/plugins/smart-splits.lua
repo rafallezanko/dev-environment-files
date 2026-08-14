@@ -1,5 +1,8 @@
 return {
   "mrjones2014/smart-splits.nvim",
+  -- poza herdr (goły terminal, wezterm, zellij); wewnątrz herdr te same
+  -- klawisze obsługuje herdr-splits.lua
+  cond = vim.env.HERDR_ENV ~= "1",
   config = function()
     require("smart-splits").setup({})
     -- Mapowania Ctrl + hjkl

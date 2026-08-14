@@ -94,6 +94,17 @@ hash -r   # żeby shell zobaczył nową komendę
 
 `~/.local/bin` na PATH oraz `HERDR_WSM_CONFIG` (żeby standalone CLI znalazł config — serwerowy plugin go nie potrzebuje) ustawia już `zsh/.zshrc`.
 
+### ctrl+hjkl przez splity neovim i panele herdr (herdr-splits)
+
+Plugin [herdr-splits.nvim](https://github.com/lmilojevicc/herdr-splits.nvim) (port smart-splits.nvim): w panelu z neovimem ctrl+hjkl chodzi po splitach nvim, a na krawędzi przeskakuje do sąsiedniego panelu herdr; w pozostałych panelach zwykła zmiana panelu z zawijaniem. Strona nvim (`nvim/.../plugins/herdr-splits.lua`, aktywna tylko przy `HERDR_ENV=1` — poza herdr klawisze trzyma smart-splits) i bindy `[[keys.command]]` w `config.toml` są w repo. Na nowej maszynie doinstaluj plugin serwerowy:
+
+```zsh
+herdr plugin install lmilojevicc/herdr-splits.nvim
+herdr server reload-config
+```
+
+Resize (alt+hjkl z README pluginu) celowo pominięty — alt+j/k zajęte przez skakanie po workspace'ach.
+
 ### Agent skill — Claude steruje herdr
 
 Oficjalny [agent skill herdr](https://herdr.dev/docs/agent-skill/) uczy Claude Code (i inne agenty) sterowania herdr z wnętrza panelu: inspekcja workspace'ów/tabów/paneli, `herdr worktree create` (worktree innego repo otwiera się jako nowy workspace widoczny w sidebarze), start agentów w panelach (`herdr agent start --kind claude`), zlecanie im zadań (`herdr agent prompt <target> "<zadanie>" --wait`) i czekanie na ich stan. Dzięki temu z sesji Claude'a w jednym repo (np. hive-mind) można zlecić zadanie w innym (np. monorepo) na świeżym worktree — bez symlinków; wbudowanych worktree Claude'a (EnterWorktree) herdr nie widzi, więc zawsze przez `herdr worktree create`.
