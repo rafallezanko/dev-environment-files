@@ -93,3 +93,29 @@ hash -r   # żeby shell zobaczył nową komendę
 ```
 
 `~/.local/bin` na PATH oraz `HERDR_WSM_CONFIG` (żeby standalone CLI znalazł config — serwerowy plugin go nie potrzebuje) ustawia już `zsh/.zshrc`.
+
+### Agent skill — Claude steruje herdr
+
+Oficjalny [agent skill herdr](https://herdr.dev/docs/agent-skill/) uczy Claude Code (i inne agenty) sterowania herdr z wnętrza panelu: inspekcja workspace'ów/tabów/paneli, `herdr worktree create` (worktree innego repo otwiera się jako nowy workspace widoczny w sidebarze), start agentów w panelach (`herdr agent start --kind claude`), zlecanie im zadań (`herdr agent prompt <target> "<zadanie>" --wait`) i czekanie na ich stan. Dzięki temu z sesji Claude'a w jednym repo (np. hive-mind) można zlecić zadanie w innym (np. monorepo) na świeżym worktree — bez symlinków; wbudowanych worktree Claude'a (EnterWorktree) herdr nie widzi, więc zawsze przez `herdr worktree create`.
+
+Skill nie jest plikiem w tym repo — instaluje się per-maszyna (jak standalone CLI pluginu wyżej):
+
+```zsh
+# instaluje do ~/.agents/skills/herdr + symlink ~/.claude/skills/herdr
+npx -y skills add herdrdev/herdr --skill herdr -g
+```
+
+Skill aktywuje się tylko, gdy w prompcie padnie „herdr", i wymaga `HERDR_ENV=1` (herdr ustawia to w swoich panelach automatycznie). Z pluginem workspace-manager składa się w całość: `herdr worktree create` → layout `dev` sam startuje Claude'a jako agenta `main` → `herdr agent prompt` zleca mu zadanie.
+
+## rtk — mniej tokenów w Claude Code
+
+[rtk](https://github.com/rtk-ai/rtk) to proxy na komendy CLI, które kompresuje ich output zanim trafi do kontekstu agenta.
+
+```zsh
+brew install rtk
+
+# hook auto-rewrite dla Claude Code (git status → rtk git status itd.)
+rtk init -g
+```
+
+Po `rtk init -g` zrestartuj Claude Code. Weryfikacja: `rtk gain` pokazuje zaoszczędzone tokeny.
