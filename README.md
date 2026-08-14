@@ -37,7 +37,7 @@ basedpyright czyta pakiety z venva projektu — w repo bez venva (`uv sync` / `u
 
 ## herdr — automatyczny layout dla worktree
 
-Pakiet `herdr/` dostarcza deklaratywny layout dla [herdr](https://herdr.dev): każdy worktree utworzony przez `herdr worktree create` otwiera się z układem `dev` — edytor `hx .` po lewej, Claude w prawej kolumnie (35%), shell pod nim. Robi to plugin **workspace-manager**, którego config linkujemy przez stow do kanonicznej ścieżki `~/.config/herdr/plugins/config/herdr-plugin-workspace-manager/config.yml` (linkowany jest tylko `config.yml` — resztę `~/.config/herdr/` tworzy sam herdr).
+Pakiet `herdr/` dostarcza deklaratywny layout dla [herdr](https://herdr.dev): każdy worktree utworzony przez `herdr worktree create` otwiera się z układem `dev` — edytor `nvim .` po lewej, Claude w prawej kolumnie (35%), shell pod nim. Robi to plugin **workspace-manager**, którego config linkujemy przez stow do kanonicznej ścieżki `~/.config/herdr/plugins/config/herdr-plugin-workspace-manager/config.yml` (linkowany jest tylko `config.yml` — resztę `~/.config/herdr/` tworzy sam herdr).
 
 ### Co musi być zainstalowane
 
@@ -103,7 +103,19 @@ herdr plugin install lmilojevicc/herdr-splits.nvim
 herdr server reload-config
 ```
 
-Resize (alt+hjkl z README pluginu) celowo pominięty — alt+j/k zajęte przez skakanie po workspace'ach.
+Resize (alt+hjkl z README pluginu) celowo pominięty — lewy option+j/k ma docierać do aplikacji w panelu.
+
+### alt+w — Workspace finder (fuzzy picker spaces)
+
+Własny picker workspace'ów w popupie (`herdr/.config/herdr/scripts/herdr-space-picker.sh`): worktree zgrupowane per repo jak w sidebarze, `*` oznacza fokus, każdy workspace ma kolorowy status agenta (`working`/`blocked`/`done`/`idle`). Pisanie filtruje po nazwie, repo **i statusie** (np. `blocked` albo `idle mono`), ctrl+j/k chodzi po liście, enter skacze, esc zamyka.
+
+Popup otwiera mini-plugin lokalny `herdr/.config/herdr/local-plugins/herdr-space-picker/` (sam manifest) — tylko pluginowe panele mają konfigurowalny tytuł ramki ("Workspace finder"; zwykły `type="popup"` ma zahardkodowane "popup"). Na nowej maszynie:
+
+```zsh
+brew install fzf   # picker stoi na fzf
+herdr plugin link ~/.config/herdr/local-plugins/herdr-space-picker
+herdr server reload-config
+```
 
 ### Agent skill — Claude steruje herdr
 

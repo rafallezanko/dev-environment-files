@@ -37,14 +37,16 @@ navigate_pane_up = "up"
 # inaczej = zwykła zmiana panelu. Nvim-side to plugins/herdr-splits.lua.
 # Resize (alt+hjkl z README pluginu) pominięty — alt+j/k zajęte przez workspace'y.
 # alt+w → własny fuzzy picker spaces (fzf, `brew install fzf`): worktree
-# zgrupowane per repo jak w sidebarze, pisanie filtruje, ctrl+j/k po liście.
+# zgrupowane per repo jak w sidebarze, statusy agentów, pisanie filtruje
+# (też po statusie), ctrl+j/k po liście. Otwierany jako pluginowy popup,
+# bo tylko on ma konfigurowalny tytuł ramki ("Workspace finder") — zwykły
+# type="popup" ma zahardkodowane "popup". Rozmiar/tytuł: herdr-plugin.toml
+# w local-plugins/herdr-space-picker (per maszyna: `herdr plugin link` — README).
 [[keys.command]]
 key = "alt+w"
-type = "popup"
-command = "~/.config/herdr/scripts/herdr-space-picker.sh"
+type = "shell"
+command = "herdr plugin pane open --plugin herdr-space-picker --entrypoint picker"
 description = "fuzzy switch spaces"
-width = "50%"
-height = "60%"
 
 [[keys.command]]
 key = "ctrl+h"

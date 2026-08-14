@@ -1,0 +1,23 @@
+# Lokalny mini-plugin: jedyny powód jego istnienia to tytuł popupu.
+# Zwykły [[keys.command]] type="popup" ma zahardkodowany tytuł "popup";
+# pluginowy panel (plugin.pane.open, placement=popup) ma wymagane `title`.
+# Sam picker to nadal ~/.config/herdr/scripts/herdr-space-picker.sh.
+#
+# Per maszyna (po stow): herdr plugin link ~/.config/herdr/local-plugins/herdr-space-picker
+# Otwieranie (bind alt+w w config.toml, type="shell"):
+#   herdr plugin pane open --plugin herdr-space-picker --entrypoint picker
+
+id = "herdr-space-picker"
+name = "Space Picker"
+version = "0.1.0"
+min_herdr_version = "0.8.0"
+description = "Fuzzy workspace picker (fzf) with agent statuses in a titled popup"
+platforms = ["linux", "macos"]
+
+[[panes]]
+id = "picker"
+title = "Workspace finder"
+placement = "popup"
+width = "50%"
+height = "60%"
+command = ["bash", "-c", "exec \"$HOME/.config/herdr/scripts/herdr-space-picker.sh\""]
