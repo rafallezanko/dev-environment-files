@@ -12,9 +12,9 @@ layouts:
     tabs:
       - title: code
         panes:
-          # główny panel: edytor (zmień na `nvim` / `v .`, jeśli wolisz)
+          # główny panel: edytor (zmień na `hx .`, jeśli wolisz helixa)
           - title: editor
-            command: hx .
+            command: nvim .
           # prawa kolumna ~35%: Claude jako ROZPOZNAWANY agent (status w sidebarze)
           - title: agent
             agent: claude
