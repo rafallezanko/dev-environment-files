@@ -18,7 +18,12 @@ layouts:
           # prawa kolumna ~35%: Claude jako ROZPOZNAWANY agent (status w sidebarze)
           - title: agent
             agent: claude
-            agentName: main
+            # NIE ustawiaj tu agentName. Przestrzeń nazw agentów jest globalna dla
+            # serwera herdr, a ten layout dostaje KAŻDY worktree — nazwa na sztywno
+            # koliduje z pierwszym żywym agentem, który ją trzyma, start pada na
+            # `agent_name_taken`, plugin loguje warning i jedzie dalej, więc pane
+            # zostaje pustym shellem. `herdr worktree create` zwraca przy tym exit 0.
+            # Bez tego pola plugin sam generuje unikalne `claude-<workspace-id>`.
             split: vertical
             size: "35%"
             # prompt: Przeczytaj TASK.md i przygotuj plan.   # opcjonalny auto-prompt
