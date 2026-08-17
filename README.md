@@ -131,6 +131,12 @@ herdr plugin link ~/.config/herdr/local-plugins/herdr-space-picker
 herdr server reload-config
 ```
 
+### alt+d — skok do agenta wymagającego uwagi
+
+Skrypt `herdr/.config/herdr/scripts/herdr-agent-jump.sh` (bind `alt+d` w `config.toml`) przeskakuje po workspace'ach wg priorytetu **blocked > done > working**: wybiera pierwszą niepustą grupę i cyklicznie leci po niej (`idle`/`unknown` ignoruje, brak kandydatów = no-op). Skok jest relatywny do zfokusowanego workspace (pierwszy pasujący po nim, z zawinięciem), kolejność jak w sidebarze/pickerze. Uzupełnia wbudowane `alt+shift+j/k` (next/previous_agent), które lecą po **wszystkich** rzędach agentów.
+
+Nic do doinstalowania (czysty `herdr workspace list` + `python3`). Uwaga: herdr łapie `alt+d` globalnie, więc w panelach tracisz readline `kill-word`.
+
 ### Agent skill — Claude steruje herdr
 
 Oficjalny [agent skill herdr](https://herdr.dev/docs/agent-skill/) uczy Claude Code (i inne agenty) sterowania herdr z wnętrza panelu: inspekcja workspace'ów/tabów/paneli, `herdr worktree create` (worktree innego repo otwiera się jako nowy workspace widoczny w sidebarze), start agentów w panelach (`herdr agent start --kind claude`), zlecanie im zadań (`herdr agent prompt <target> "<zadanie>" --wait`) i czekanie na ich stan. Dzięki temu z sesji Claude'a w jednym repo (np. hive-mind) można zlecić zadanie w innym (np. monorepo) na świeżym worktree — bez symlinków; wbudowanych worktree Claude'a (EnterWorktree) herdr nie widzi, więc zawsze przez `herdr worktree create`.

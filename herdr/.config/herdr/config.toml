@@ -48,6 +48,16 @@ type = "shell"
 command = "herdr plugin pane open --plugin herdr-space-picker --entrypoint picker"
 description = "fuzzy switch spaces"
 
+# alt+d → inteligentny skok po agentach: najpierw cyklicznie po `blocked`,
+# a gdy nie ma blocked — po `working` (scripts/herdr-agent-jump.sh). Uzupełnia
+# wbudowane next/previous_agent (alt+shift+j/k), które lecą po wszystkich rzędach.
+# Uwaga: herdr łapie alt+d globalnie, więc w panelach tracisz readline kill-word.
+[[keys.command]]
+key = "alt+d"
+type = "shell"
+command = "~/.config/herdr/scripts/herdr-agent-jump.sh"
+description = "jump to blocked/working agent"
+
 [[keys.command]]
 key = "ctrl+h"
 type = "plugin_action"
