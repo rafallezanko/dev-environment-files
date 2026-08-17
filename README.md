@@ -35,6 +35,20 @@ hx --health go
 
 basedpyright czyta pakiety z venva projektu — w repo bez venva (`uv sync` / `uv venv`) completion obejmuje tylko stdlib.
 
+## nvim — LSP
+
+Pakiet `nvim/` zarządza language serverami i narzędziami przez [Mason](https://github.com/williamboman/mason.nvim) — `terraformls`, `bashls`, `helm_ls`, `shfmt`, `shellcheck` (i reszta) instalują się **automatycznie przy pierwszym starcie nvim** (albo ręcznie przez `:Mason`). Część serwerów potrzebuje jednak zewnętrznych binarek, których Mason nie dostarcza:
+
+```zsh
+# Terraform — `terraform fmt` (format-on-save) + walidacja w terraformls
+brew install terraform
+
+# Helm — funkcje helm_ls (render/lookup wykresów)
+brew install helm
+```
+
+Bash: diagnostykę daje `shellcheck` (Mason), a `bashls` podpina go sam; formatuje `shfmt` (Mason). Helm: szablony (`Chart.yaml`, `values.yaml`, `templates/*.yaml`) wykrywa plugin `vim-helm` jako `ft=helm` — bez formatera (Go templates w YAML-u).
+
 ## herdr — automatyczny layout dla worktree
 
 Pakiet `herdr/` dostarcza deklaratywny layout dla [herdr](https://herdr.dev): każdy worktree utworzony przez `herdr worktree create` otwiera się z układem `dev` — edytor `nvim .` po lewej, Claude w prawej kolumnie (35%), shell pod nim. Robi to plugin **workspace-manager**, którego config linkujemy przez stow do kanonicznej ścieżki `~/.config/herdr/plugins/config/herdr-plugin-workspace-manager/config.yml` (linkowany jest tylko `config.yml` — resztę `~/.config/herdr/` tworzy sam herdr).

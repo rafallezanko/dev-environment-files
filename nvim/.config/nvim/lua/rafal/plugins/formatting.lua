@@ -21,6 +21,10 @@ return {
         java = { "google-java-format" },
         lua = { "stylua" },
         python = { "isort", "black" },
+        sh = { "shfmt" },
+        bash = { "shfmt" },
+        terraform = { "terraform_fmt" },
+        ["terraform-vars"] = { "terraform_fmt" },
       },
       format_on_save = {
         lsp_fallback = true,

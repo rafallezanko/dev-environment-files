@@ -15,6 +15,9 @@ return {
         "gradle_ls",
         "jdtls",
         "kotlin_lsp",
+        "terraformls",
+        "bashls",
+        "helm_ls",
       },
     },
     dependencies = {
@@ -43,6 +46,8 @@ return {
         "black", -- python formatter
         "pylint",
         "google-java-format",
+        "shfmt", -- bash/sh formatter (conform)
+        "shellcheck", -- bash/sh diagnostics (bashls podpina automatycznie)
       },
     },
     dependencies = {
