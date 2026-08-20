@@ -133,9 +133,9 @@ herdr server reload-config
 
 ### alt+d — skok do agenta wymagającego uwagi
 
-Skrypt `herdr/.config/herdr/scripts/herdr-agent-jump.sh` (bind `alt+d` w `config.toml`) przeskakuje po workspace'ach wg priorytetu **blocked > done > working**: wybiera pierwszą niepustą grupę i cyklicznie leci po niej (`idle`/`unknown` ignoruje, brak kandydatów = no-op). Skok jest relatywny do zfokusowanego workspace (pierwszy pasujący po nim, z zawinięciem), kolejność jak w sidebarze/pickerze. Uzupełnia wbudowane `alt+shift+j/k` (next/previous_agent), które lecą po **wszystkich** rzędach agentów.
+Skrypt `herdr/.config/herdr/scripts/herdr-agent-jump.sh` (bind `alt+d` w `config.toml`) przeskakuje po agentach wg priorytetu **blocked > done > working**: wybiera pierwszą niepustą grupę i cyklicznie leci po niej (`idle`/`unknown` ignoruje, brak kandydatów = no-op). Skacze do **konkretnego pane'a** agenta (`herdr agent focus <pane_id>`), nie tylko do workspace — przy kilku agentach w jednym workspace ląduje w tym właściwym. Skok jest relatywny do zfokusowanego agenta (pierwszy pasujący po nim, z zawinięciem), kolejność jak w sidebarze/pickerze. Uzupełnia wbudowane `alt+shift+j/k` (next/previous_agent), które lecą po **wszystkich** rzędach agentów.
 
-Nic do doinstalowania (czysty `herdr workspace list` + `python3`). Uwaga: herdr łapie `alt+d` globalnie, więc w panelach tracisz readline `kill-word`.
+Nic do doinstalowania (czysty `herdr agent list` + `herdr workspace list` na kolejność + `python3`). Uwaga: herdr łapie `alt+d` globalnie, więc w panelach tracisz readline `kill-word`.
 
 ### Agent skill — Claude steruje herdr
 

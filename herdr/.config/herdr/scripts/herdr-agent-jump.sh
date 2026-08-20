@@ -7,20 +7,28 @@
 #   2. inaczej jeśli są `done`  → cyklicznie po nich,
 #   3. inaczej jeśli są `working` → cyklicznie po nich,
 #   4. jeśli żadna z powyższych grup → nic (no-op; idle/unknown ignorujemy).
-# Kolejność cyklu = kolejność sidebara (worktree pogrupowane per repo, jak
-# w herdr-space-picker), więc kolejne wciśnięcia lecą przewidywalnie w dół.
-# Skok jest RELATYWNY do aktualnie zfokusowanego workspace: bierze pierwszy
-# pasujący PO nim (z zawinięciem), więc trzymając klawisz przelatujesz po
-# wszystkich blocked, a gdy je odblokujesz — po working.
+# Skacze do KONKRETNEGO pane'a agenta (herdr agent focus <pane_id>), nie tylko
+# do workspace — przy kilku agentach w jednym workspace ląduje w tym właściwym.
+# Kolejność cyklu = kolejność sidebara (workspace wg workspace list z worktree
+# pogrupowanymi per repo, w obrębie workspace kolejność paneli). Skok jest
+# RELATYWNY do aktualnie zfokusowanego agenta: bierze pierwszego pasującego PO
+# nim (z zawinięciem), więc kolejne wciśnięcia przelatują po wszystkich blocked,
+# a gdy je odblokujesz — po done, potem po working.
 set -euo pipefail
 
-id=$(herdr workspace list | python3 -c '
-import json, sys
+# workspace list oddzielnie i przez export — prefiks VAR=... przed pipeline'em
+# ustawiłby zmienną tylko dla pierwszego członu (herdr agent list), nie dla python3.
+export HERDR_WS_JSON="$(herdr workspace list)"
+pane=$(herdr agent list | python3 -c '
+import json, os, sys
 
-ws = json.load(sys.stdin)["result"]["workspaces"]
+agents = json.load(sys.stdin)["result"]["agents"]
+if not agents:
+    sys.exit(0)
 
-# Ta sama kolejność co picker/sidebar: roots w kolejności herdr, linked
-# worktree podpięte zaraz pod swoje repo.
+# Ranking workspace_id wg sidebara (roots w kolejności herdr, linked worktree
+# podpięte pod swoje repo — tak jak picker) → cykl agentów idzie jak sidebar.
+ws = json.loads(os.environ["HERDR_WS_JSON"])["result"]["workspaces"]
 roots, children = [], {}
 for w in ws:
     wt = w.get("worktree")
@@ -28,26 +36,26 @@ for w in ws:
         children.setdefault(wt["repo_name"], []).append(w)
     else:
         roots.append(w)
-
-order = []
-def emit_kids(repo):
+ws_order = []
+def kids(repo):
     for k in children.pop(repo, []):
-        order.append(k)
+        ws_order.append(k["workspace_id"])
 for w in roots:
-    order.append(w)
-    repo = w["worktree"]["repo_name"] if w.get("worktree") else w["label"]
-    emit_kids(repo)
-for repo in list(children):  # repo bez otwartego głównego checkoutu
-    emit_kids(repo)
+    ws_order.append(w["workspace_id"])
+    kids(w["worktree"]["repo_name"] if w.get("worktree") else w["label"])
+for repo in list(children):
+    kids(repo)
+rank = {wid: i for i, wid in enumerate(ws_order)}
 
-n = len(order)
-if n == 0:
-    sys.exit(0)
+# Sort: workspace wg sidebara, w obrębie workspace kolejność z agent list
+# (kolejność paneli). Stabilny sort po rank zachowuje oryginalną kolejność.
+agents.sort(key=lambda a: rank.get(a["workspace_id"], len(rank)))
 
-focused = next((i for i, w in enumerate(order) if w.get("focused")), -1)
+n = len(agents)
+focused = next((i for i, a in enumerate(agents) if a.get("focused")), -1)
 
 def idxs(status):
-    return [i for i, w in enumerate(order) if w.get("agent_status") == status]
+    return [i for i, a in enumerate(agents) if a.get("agent_status") == status]
 
 target = set(idxs("blocked") or idxs("done") or idxs("working"))
 if not target:
@@ -57,9 +65,9 @@ if not target:
 for step in range(1, n + 1):
     j = (focused + step) % n
     if j in target:
-        print(order[j]["workspace_id"])
+        print(agents[j]["pane_id"])
         break
 ') || exit 0
 
-[ -z "$id" ] && exit 0
-exec herdr workspace focus "$id"
+[ -z "$pane" ] && exit 0
+exec herdr agent focus "$pane"
