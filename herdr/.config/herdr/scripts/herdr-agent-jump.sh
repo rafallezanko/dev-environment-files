@@ -65,9 +65,19 @@ if not target:
 for step in range(1, n + 1):
     j = (focused + step) % n
     if j in target:
-        print(agents[j]["pane_id"])
+        print(agents[j]["pane_id"], agents[j]["workspace_id"])
         break
 ') || exit 0
 
 [ -z "$pane" ] && exit 0
+ws=${pane#* }
+pane=${pane% *}
+
+# Workaround na regresję herdr 0.9.0 (#3760): `agent focus` ustawia focus tylko
+# po stronie serwera, viewport klienta nie podąża. `workspace focus` viewport
+# przesuwa, więc najpierw on (przeskok między workspace'ami), a dopiero potem
+# `agent focus` dobiera właściwy panel w już widocznym workspace. Kolejność
+# istotna: odwrotnie `workspace focus` byłby no-opem (workspace już zfokusowany
+# serwerowo) i viewport by nie ruszył. Do usunięcia po wydaniu z fixem.
+herdr workspace focus "$ws" >/dev/null
 exec herdr agent focus "$pane"
