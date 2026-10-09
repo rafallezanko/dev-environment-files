@@ -12,3 +12,10 @@ herdr/.config/herdr/plugins/*
 !herdr/.config/herdr/plugins/config/
 herdr/.config/herdr/plugins/config/*
 !herdr/.config/herdr/plugins/config/herdr-plugin-workspace-manager/
+
+# Stow linkuje cały ~/.config/zed do repo, więc Zed pisze tu swój stan
+# (prompts/ = baza LMDB biblioteki promptów, themes/). Trackujemy tylko konfigurację.
+zed/.config/zed/*
+!zed/.config/zed/settings.json
+!zed/.config/zed/keymap.json
+!zed/.config/zed/tasks.json

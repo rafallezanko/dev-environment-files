@@ -1,0 +1,199 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "show_whitespaces": "all",
+  "indent_guides": {
+    "background_coloring": "disabled",
+    "coloring": "indent_aware"
+  },
+  "preferred_line_length": 120,
+  "soft_wrap": "editor_width",
+  "tab_size": 4,
+  "vim": {
+    "use_smartcase_find": false,
+    "toggle_relative_line_numbers": true
+  },
+  "toolbar": {
+    "code_actions": false,
+    "breadcrumbs": true
+  },
+  "minimap": {
+    "thumb": "always",
+    "show": "never"
+  },
+  "relative_line_numbers": "enabled",
+  "agent_buffer_font_size": 12.0,
+  "agent_ui_font_size": 16.0,
+  "buffer_line_height": "comfortable",
+  "buffer_font_weight": 400.0,
+  "use_system_window_tabs": false,
+  // Bez paska kart: pane działa jak okno w vimie — pokazuje jeden plik, a otwarte
+  // pliki to ukryte bufory (przełączanie: space f b / ctrl-tab, ctrl-o / ctrl-i).
+  // Ścieżkę pliku widać w breadcrumbs. Jeśli chcesz, żeby pane w ogóle nie trzymał
+  // starych buforów, dopisz "max_tabs": 1.
+  // Wskaźnik aktywnego splitu: ramka (kolor border.selected) + przygaszone pozostałe
+  // splity. Działa tylko na splitach edytora — docki (drzewo, agent, terminal)
+  // Zed tak nie oznacza; drzewo ma tylko ramkę zaznaczonego wpisu (panel.focused_border).
+  "active_pane_modifiers": {
+    "border_size": 2.0,
+    "inactive_opacity": 0.5
+  },
+  "theme_overrides": {
+    "One Light": {
+      "border.selected": "#4078f2",
+      "panel.focused_border": "#4078f2"
+    },
+    "Gruvbox Dark": {
+      "border.selected": "#fe8019",
+      "panel.focused_border": "#fe8019"
+    }
+  },
+  // Układ: [wątki] [drzewo/git] [kod] [agent], terminal na dole pod kodem i agentem.
+  // Docki w Zedzie się nie dzielą (jeden panel na raz), więc terminal nie może stać
+  // tylko pod agentem — right_aligned rozciąga dolny dock pod kod + prawy dock,
+  // a lewy (drzewo) zostaje na pełną wysokość.
+  "bottom_dock_layout": "right_aligned",
+  "project_panel": {
+    "dock": "left"
+  },
+  "git_panel": {
+    "dock": "left"
+  },
+  "agent": {
+    "dock": "right",
+    // Szerokość proporcjonalna do kolumny z kodem (start 1:1). Po przeciągnięciu
+    // krawędzi Zed zapamiętuje proporcję, więc na mniejszym ekranie skaluje się razem z oknem.
+    "flexible": true,
+    // Dźwięk zawsze, gdy agent skończy albo czeka na mnie.
+    "play_sound_when_agent_done": "always",
+    // Bez wyskakujących powiadomień — tylko dźwięk.
+    "notify_when_agent_waiting": "never",
+    "threads_sidebar": {
+      "position": "left"
+    }
+  },
+  "tab_bar": {
+    "show": false,
+    "show_nav_history_buttons": false
+  },
+  "preview_tabs": {
+    "enable_preview_from_project_panel": true,
+    "enabled": true
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+    "anthropic_retention": false
+  },
+  "agent_servers": {
+    "claude-acp": {
+      "default_config_options": {
+        "mode": "auto"
+      },
+      "type": "registry"
+    }
+  },
+  "vim_mode": true,
+  "base_keymap": "Zed",
+  // Podpowiedzi dla sekwencji (jak which-key.nvim) — widać, co dalej po `space`.
+  "which_key": {
+    "enabled": true,
+    // Timeout sekwencji jest na sztywno 1 s, więc popup musi wyskoczyć szybko.
+    "delay_ms": 100
+  },
+  // Odpowiednik mason ensure_installed: Zed sam doinstaluje te rozszerzenia,
+  // a one pobierają swoje LSP (jdtls, terraform-ls, helm_ls, ansible-ls…).
+  // Python (basedpyright + ruff), Go (gopls), YAML, Bash, JSON są wbudowane.
+  "auto_install_extensions": {
+    "java": true,
+    "kotlin": true,
+    "terraform": true,
+    "ansible": true,
+    "helm": true,
+    "dockerfile": true,
+    "docker-compose": true,
+    "toml": true,
+    "lua": true,
+    "graphql": true,
+    "make": true,
+    "git-firefly": true,
+    "html": true
+  },
+  // Jak vim-helm / wykrywanie ansible: bez tego szablony to zwykły YAML,
+  // a yaml-ls i prettier psują {{ }}.
+  "file_types": {
+    "Helm": [
+      "**/templates/**/*.tpl",
+      "**/templates/**/*.yaml",
+      "**/templates/**/*.yml",
+      "**/helmfile.d/**/*.yaml",
+      "**/helmfile.d/**/*.yml"
+    ],
+    "Ansible": [
+      "**.ansible.yml",
+      "**.ansible.yaml",
+      "**/defaults/*.yml",
+      "**/defaults/*.yaml",
+      "**/meta/*.yml",
+      "**/meta/*.yaml",
+      "**/tasks/*.yml",
+      "**/tasks/*.yaml",
+      "**/handlers/*.yml",
+      "**/handlers/*.yaml",
+      "**/group_vars/*.yml",
+      "**/group_vars/*.yaml",
+      "**/host_vars/*.yml",
+      "**/host_vars/*.yaml",
+      "**/playbooks/*.yml",
+      "**/playbooks/*.yaml",
+      "**playbook*.yml",
+      "**playbook*.yaml"
+    ]
+  },
+  "format_on_save": "on",
+  "languages": {
+    "Helm": {
+      "format_on_save": "off"
+    },
+    "Ansible": {
+      "format_on_save": "off"
+    }
+  },
+  "lsp": {
+    "jdtls": {
+      "settings": {
+        "java_home": "/opt/homebrew/opt/sdkman-cli/libexec/candidates/java/current"
+      }
+    }
+  },
+  "terminal": {
+    "font_size": 13.0,
+    "shell": "system",
+    // option zostaje optionem — inaczej w terminalu nie da się pisać polskich znaków
+    // (Zed nie ma odpowiednika macos-option-as-alt=left z ghostty).
+    // ctrl-hjkl w terminalu przełącza panele (jak w herdr), więc ekran czyść przez cmd-k.
+    "option_as_meta": false,
+    "dock": "bottom",
+    // Dolny dock ma wysokość w px (flex działa tylko dla lewego/prawego).
+    // ~połowa okna na laptopie; po przeciągnięciu krawędzi Zed zapamiętuje rozmiar.
+    "default_height": 480
+  },
+  "icon_theme": {
+    "mode": "light",
+    "light": "Zed (Default)",
+    "dark": "Zed (Default)"
+  },
+  "ui_font_size": 16.0,
+  "buffer_font_size": 13.0,
+  "theme": {
+    "mode": "light",
+    "light": "One Light",
+    "dark": "Gruvbox Dark Hard",
+  },
+}

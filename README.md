@@ -49,6 +49,14 @@ brew install helm
 
 Bash: diagnostykę daje `shellcheck` (Mason), a `bashls` podpina go sam; formatuje `shfmt` (Mason). Helm: szablony (`Chart.yaml`, `values.yaml`, `templates/*.yaml`) wykrywa plugin `vim-helm` jako `ft=helm` — bez formatera (Go templates w YAML-u).
 
+## zed — konfiguracja edytora
+
+Pakiet `zed/` linkuje cały `~/.config/zed` (`stow zed`; gdy repo nie leży w `~/dotfiles`, dodaj `-t ~`). W repo są tylko `settings.json`, `keymap.json` i `tasks.json` — resztę (`prompts/`, `themes/`) Zed tworzy sam i jest w `.gitignore`.
+
+- **LSP:** `auto_install_extensions` w `settings.json` (odpowiednik Mason) — Java, Kotlin, Terraform, Ansible, Helm itd. instalują się przy pierwszym starcie. Python, Go, YAML, Bash są wbudowane. jdtls bierze JDK z SDKMAN (`lsp.jdtls.settings.java_home`).
+- **Keymapa:** leader = `space` jak w nvim, `ctrl+hjkl` po panelach jak herdr-splits, `alt-*` jak w herdr (tylko litery, które nie są polskimi znakami). Pełna lista: `space f k`.
+- **Układ:** wątki agenta | drzewo | kod | agent; terminal na dole pod kodem i agentem. Bez kart — pane działa jak okno vima.
+
 ## herdr — automatyczny layout dla worktree
 
 Pakiet `herdr/` dostarcza deklaratywny layout dla [herdr](https://herdr.dev): każdy worktree utworzony przez `herdr worktree create` otwiera się z układem `dev` — edytor `nvim .` po lewej, Claude w prawej kolumnie (35%), shell pod nim. Robi to plugin **workspace-manager**, którego config linkujemy przez stow do kanonicznej ścieżki `~/.config/herdr/plugins/config/herdr-plugin-workspace-manager/config.yml` (linkowany jest tylko `config.yml` — resztę `~/.config/herdr/` tworzy sam herdr).

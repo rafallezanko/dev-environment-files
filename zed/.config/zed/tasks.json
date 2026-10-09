@@ -1,0 +1,14 @@
+// Taski globalne. `space l g` → lazygit na środku okna (jak LazyGit w nvim).
+[
+  {
+    "label": "lazygit",
+    "command": "lazygit",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "reveal_target": "center",
+    "hide": "always",
+    "shell": "system"
+  }
+]

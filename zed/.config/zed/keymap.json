@@ -1,0 +1,266 @@
+// Zed keymap — przeniesione z nvim (leader = space) i herdr (alt-*).
+// Nie 1:1: tylko to, czego realnie używam; resztę dają domyślne bindy vim-mode Zeda
+// (gd, gD, K, [d ]d, ctrl-o/ctrl-i, ctrl-w s/v/q, gc komentarze…).
+// Lista akcji: `zed: open keymap` (cmd-k cmd-s) albo `space f k`.
+[
+  // --- Nawigacja panelami: ctrl-hjkl wszędzie (edytor, drzewo, terminal, agent) — jak herdr-splits.
+  {
+    "context": "(Editor && !menu && vim_mode != insert) || Terminal || Dock",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight"
+    }
+  },
+  // Prompt agenta (AcpThread > Editor) jest stale w trybie insert, więc powyższy blok go
+  // pomija. Musi być na poziomie Editor — inaczej wygrywają domyślne ctrl-h (backspace),
+  // ctrl-k (kill), ctrl-l (center). Kosztem tych trzech w promptcie.
+  {
+    "context": "(AcpThread > Editor) || (MessageEditor > Editor) || AcpThread",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight"
+    }
+  },
+  // Scroll rozmowy z promptu, po vimowemu (domyślne Zeda wymagają pageup/home = fn+strzałki).
+  // Kosztem ctrl-d (delete forward) i ctrl-u (kasuj do początku linii) w promptcie.
+  {
+    "context": "AcpThread > Editor",
+    "bindings": {
+      "ctrl-d": "agent::ScrollOutputPageDown",
+      "ctrl-u": "agent::ScrollOutputPageUp",
+      "ctrl-n": "agent::ScrollOutputToNextMessage",
+      "ctrl-p": "agent::ScrollOutputToPreviousMessage",
+      "ctrl-shift-g": "agent::ScrollOutputToBottom"
+    }
+  },
+  // Sidebar wątków jest poza workspace'em (ActivatePane* tam nie sięga).
+  // FocusWorkspaceSidebar z sidebara wraca do poprzedniego fokusu.
+  // Też w polach tekstowych sidebara (filtr, historia) — inaczej łapie je blok
+  // Editor wyżej i ctrl-l = ActivatePaneRight, który poza workspace'em nic nie robi.
+  {
+    "context": "ThreadsSidebar || (ThreadsSidebar > Editor) || ThreadsArchiveView || (ThreadsArchiveView > Editor)",
+    "bindings": {
+      "ctrl-l": "multi_workspace::FocusWorkspaceSidebar"
+    }
+  },
+  // Wątki da się zamykać tylko z listy w sidebarze (Zed nie ma akcji „zamknij aktywny
+  // wątek”, a fokus na sidebarze zeruje zaznaczenie). Wejście: cmd-alt-;, j/k, potem:
+  // c = archiwizuj (jak space w c; działa tylko dla wątków, które skończyły),
+  // d d = usuń na stałe (domyślne vim), shift-backspace = archiwizuj (domyślne).
+  {
+    "context": "ThreadsSidebar && !Editor",
+    "bindings": {
+      "c": "agent::ArchiveSelectedThread"
+    }
+  },
+
+  // --- Globalne, odpowiedniki herdr. Zed nie odróżnia lewego i prawego optiona, więc
+  // tylko alt+litery, które nie są polskimi znakami (ą ć ę ł ń ó ś ź ż zostają wolne).
+  // Drzewo: cmd-shift-e, agent: cmd-? (domyślne Zeda) albo leader.
+  {
+    "context": "Workspace",
+    "bindings": {
+      "alt-m": "workspace::ToggleZoom",
+      "alt-w": "projects::OpenRecent",
+      // Odpowiednik herdr-agent-jump.sh nie istnieje w Zedzie 1.23 (NextThread leci po
+      // wszystkich wątkach, bez filtra statusu). Najbliżej: switcher wątków ze statusami
+      // (czeka na zgodę / błąd / nieprzeczytane), posortowany MRU.
+      "alt-d": "agents_sidebar::ToggleThreadSwitcher",
+      "alt-shift-j": "multi_workspace::NextThread",
+      "alt-shift-k": "multi_workspace::PreviousThread",
+      "alt-g": "git_panel::ToggleFocus"
+    }
+  },
+
+  // W terminalu space trafia do shella, więc chowanie terminala od środka: cmd-j (domyślne).
+  // Panel terminala zawsze ma własne taby (tab_bar.show go nie dotyczy).
+  // cmd-n = nowy terminal w splicie obok (zamiast taba); tab: przycisk + w panelu.
+  // cmd-t się nie da — to skrót z menu aplikacji, macOS łapie go przed keymapą.
+  {
+    "context": "Terminal",
+    "bindings": {
+      "cmd-n": "pane::SplitRight",
+      "cmd-shift-n": "pane::SplitDown"
+    }
+  },
+
+  // --- Pusty pane (po zamknięciu ostatniego bufora) i panele bez edytora: tu nie ma
+  // VimControl, więc leader z bloku niżej nie działa — minimalny zestaw, żeby wrócić.
+  {
+    "context": "!Editor && !Terminal",
+    "bindings": {
+      "space f f": "file_finder::Toggle",
+      "space f b": "tab_switcher::Toggle",
+      "space f r": "projects::OpenRecent",
+      "space b u": "pane::ReopenClosedItem",
+      "space e": "workspace::ToggleLeftDock",
+      "space a c": "workspace::ToggleRightDock",
+      "space t": "workspace::ToggleBottomDock",
+      "space w c": "workspace::CloseProject"
+    }
+  },
+
+  // Kolejne alt-d przy otwartym switcherze przesuwa zaznaczenie (jak ctrl-tab).
+  {
+    "context": "ThreadSwitcher",
+    "bindings": {
+      "alt-d": "agents_sidebar::ToggleThreadSwitcher",
+      "alt-shift-d": ["agents_sidebar::ToggleThreadSwitcher", { "select_last": true }]
+    }
+  },
+
+  // --- Insert: jk = Esc.
+  {
+    "context": "vim_mode == insert",
+    "bindings": {
+      "j k": "vim::NormalBefore"
+    }
+  },
+
+  // --- Podpowiedzi: ctrl-j/k jak w nvim-cmp.
+  {
+    "context": "Editor && showing_completions",
+    "bindings": {
+      "ctrl-j": "editor::ContextMenuNext",
+      "ctrl-k": "editor::ContextMenuPrevious"
+    }
+  },
+
+  // --- Normal mode: LSP jak w lsp.lua (gd, gD, K, [d, ]d są domyślne).
+  {
+    "context": "vim_mode == normal && !menu",
+    "bindings": {
+      "g R": "editor::FindAllReferences",
+      "g i": "editor::GoToImplementation",
+      "g t": "editor::GoToTypeDefinition",
+      "] h": "editor::GoToHunk",
+      "[ h": "editor::GoToPreviousHunk",
+      "ctrl-d": ["workspace::SendKeystrokes", "ctrl-d z z"],
+      "ctrl-u": ["workspace::SendKeystrokes", "ctrl-u z z"]
+    }
+  },
+
+  // --- Leader (normal + visual).
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      // pliki / szukanie (fzf-lua)
+      "space f f": "file_finder::Toggle",
+      "space f b": "tab_switcher::Toggle",
+      "space f r": "projects::OpenRecent",
+      "space f s": "pane::DeploySearch",
+      "space f c": "pane::DeploySearch",
+      "space f o": "outline::Toggle",
+      "space f S": "project_symbols::Toggle",
+      "space f k": "zed::OpenKeymap",
+      "space f p": "command_palette::Toggle",
+
+      // drzewo (nvim-tree)
+      "space e": "workspace::ToggleLeftDock",
+
+      // LSP
+      "space c a": "editor::ToggleCodeActions",
+      "space r n": "editor::Rename",
+      "space r s": "editor::RestartLanguageServer",
+      "space d": "editor::Hover",
+      "space D": "diagnostics::DeployCurrentFile",
+      "space x w": "diagnostics::Deploy",
+      "space m p": "editor::Format",
+
+      // splity (bez tabów: pane = okno vima)
+      "space s v": "pane::SplitRight",
+      "space s h": "pane::SplitDown",
+      "space s x": "pane::CloseAllItems",
+      "space s m": "workspace::ToggleZoom",
+      "space s e": "vim::ResetPaneSizes",
+
+      // bufory (zamiast tabów)
+      "space b n": "pane::ActivateNextItem",
+      "space b p": "pane::ActivatePreviousItem",
+      "space b d": "pane::CloseActiveItem",
+      "space b o": "pane::CloseOtherItems",
+      "space b u": "pane::ReopenClosedItem",
+
+      // git: hunki (gitsigns)
+      "space h s": "git::ToggleStaged",
+      "space h r": "git::Restore",
+      "space h S": "git::StageFile",
+      "space h p": "editor::ToggleSelectedDiffHunks",
+      "space h b": "git::Blame",
+      "space h B": "editor::ToggleGitBlameInline",
+      // git: natywny Zed na co dzień, lazygit do rebase/log/cherry-pick
+      "space g g": "git_panel::ToggleFocus",
+      "space g d": "git::Diff",
+      "space g c": "git::Commit",
+      "space g p": "git::Push",
+      "space g P": "git::Pull",
+      "space g b": "git::Switch",
+      "space l g": ["task::Spawn", { "task_name": "lazygit" }],
+
+      // testy / taski (neotest)
+      "space r t": "editor::SpawnNearestTask",
+      "space r a": "task::Spawn",
+      "space r l": "task::Rerun",
+
+      // workspace'y (projekty w sidebarze wątków) — jak spaces w herdr
+      "space w o": "projects::OpenRecent",
+      "space w a": "workspace::Open",
+      "space w n": "multi_workspace::NextProject",
+      "space w p": "multi_workspace::PreviousProject",
+      "space w l": "multi_workspace::ToggleWorkspaceSidebar",
+      "space w t": "git::Worktree",
+      // zamyka bieżący projekt w sidebarze (pyta o niezapisane pliki)
+      "space w c": "workspace::CloseProject",
+
+      // terminal: panel na dole (toggle) albo terminal jako bufor w bieżącym splicie
+      "space t": "workspace::ToggleBottomDock",
+      "space T": "workspace::NewCenterTerminal",
+
+      // agent (claudecode.nvim)
+      "space a c": "workspace::ToggleRightDock",
+      "space a n": ["agent::NewExternalAgentThread", { "agent": { "custom": { "name": "claude-acp" } } }],
+      "space a l": "multi_workspace::ToggleWorkspaceSidebar",
+      "space a f": "multi_workspace::FocusWorkspaceSidebar",
+      // filtr / historia działają tylko z fokusem w sidebarze — najpierw cmd-alt-; (fokus)
+      "space a /": ["workspace::SendKeystrokes", "cmd-alt-; cmd-f"],
+      "space a h": ["workspace::SendKeystrokes", "cmd-alt-; cmd-g"],
+      "space a N": "agent::ToggleNewThreadMenu",
+      "space a v": "agent::OpenAgentDiff",
+      "space a a": "agent::KeepAll",
+      "space a d": "agent::RejectAll"
+    }
+  },
+
+  // --- Visual: wyślij zaznaczenie do agenta.
+  {
+    "context": "Editor && vim_mode == visual && !menu",
+    "bindings": {
+      "space a s": "agent::AddSelectionToThread"
+    }
+  },
+
+  // --- Drzewo plików w stylu nvim-tree.
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "a": "project_panel::NewFile",
+      "shift-a": "project_panel::NewDirectory",
+      "r": "project_panel::Rename",
+      "d": "project_panel::Trash",
+      "x": "project_panel::Cut",
+      "c": "project_panel::Copy",
+      "p": "project_panel::Paste",
+      "l": "project_panel::ExpandSelectedEntry",
+      "h": "project_panel::CollapseSelectedEntry",
+      "shift-w": "project_panel::CollapseAllEntries",
+      "shift-h": "project_panel::ToggleHideHidden",
+      "ctrl-v": "project_panel::OpenSplitVertical",
+      "ctrl-x": "project_panel::OpenSplitHorizontal",
+      "space e": "workspace::ToggleLeftDock"
+    }
+  }
+]
