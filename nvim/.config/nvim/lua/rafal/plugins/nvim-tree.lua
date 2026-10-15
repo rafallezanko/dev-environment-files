@@ -39,6 +39,10 @@ return {
       git = {
         ignore = false,
       },
+      -- git checkout/rebase touches hundreds of files at once
+      filesystem_watchers = {
+        max_events = 1000,
+      },
     })
 
     -- set keymaps
