@@ -156,8 +156,17 @@
       "**playbook*.yaml"
     ]
   },
-  "format_on_save": "on",
+  // Formatuj przy zapisie tylko zmienione linie — "on" przepuszczał cały plik
+  // (np. values.yaml przez prettiera) i robił diff na pół repo.
+  "format_on_save": "modifications",
   "languages": {
+    // terraform fmt jest kanoniczny i tak go trzyma repo — cały plik jak w nvim.
+    "Terraform": {
+      "format_on_save": "on"
+    },
+    "Terraform Vars": {
+      "format_on_save": "on"
+    },
     "Helm": {
       "format_on_save": "off"
     },
