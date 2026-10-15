@@ -1,3 +1,7 @@
+# Homebrew: prepend /opt/homebrew/{bin,sbin} to PATH (inaczej /usr/bin wygrywa i np.
+# python3 to systemowe 3.9.6 zamiast brewowego 3.14 — Mason tego nie akceptuje).
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 autoload -Uz compinit
 compinit
 export SDKMAN_DIR=$(brew --prefix sdkman-cli)/libexec
