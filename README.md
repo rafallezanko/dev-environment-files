@@ -57,6 +57,13 @@ Pakiet `zed/` linkuje cały `~/.config/zed` (`stow zed`; gdy repo nie leży w `~
 - **Keymapa:** leader = `space` jak w nvim, `ctrl+hjkl` po panelach jak herdr-splits, `alt-*` jak w herdr (tylko litery, które nie są polskimi znakami). Pełna lista: `space f k`.
 - **Układ:** wątki agenta | drzewo | kod | agent; terminal na dole pod kodem i agentem. Bez kart — pane działa jak okno vima.
 
+## rex — multiplekser terminala
+
+Pakiet `rex/` linkuje cały `~/.config/rex` (`stow rex`); w repo jest tylko `init.lua`. Po zmianie: `rex config check`, potem `rex config reload`.
+
+- **Bindy przeniesione z herdr:** `alt+m` = zoom panelu.
+- **`ctrl+hjkl` po panelach jak herdr-splits:** akcja `smart_nav` w `init.lua` sprawdza proces na pierwszym planie — w panelu z nvim/vim przekazuje klawisz do edytora, w pozostałych przełącza panel Rex. Drugą połowę robi `smart-splits.lua` w nvim: na krawędzi splitów woła `rex focus <kierunek>` (bez Remote Control).
+
 ## herdr — automatyczny layout dla worktree
 
 Pakiet `herdr/` dostarcza deklaratywny layout dla [herdr](https://herdr.dev): każdy worktree utworzony przez `herdr worktree create` otwiera się z układem `dev` — edytor `nvim .` po lewej, Claude w prawej kolumnie (35%), shell pod nim. Robi to plugin **workspace-manager**, którego config linkujemy przez stow do kanonicznej ścieżki `~/.config/herdr/plugins/config/herdr-plugin-workspace-manager/config.yml` (linkowany jest tylko `config.yml` — resztę `~/.config/herdr/` tworzy sam herdr).

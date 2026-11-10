@@ -19,3 +19,7 @@ zed/.config/zed/*
 !zed/.config/zed/settings.json
 !zed/.config/zed/keymap.json
 !zed/.config/zed/tasks.json
+
+# Stow linkuje cały ~/.config/rex do repo. Trackujemy tylko init.lua.
+rex/.config/rex/*
+!rex/.config/rex/init.lua
