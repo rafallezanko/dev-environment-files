@@ -62,6 +62,7 @@ Pakiet `zed/` linkuje cały `~/.config/zed` (`stow zed`; gdy repo nie leży w `~
 Pakiet `rex/` linkuje cały `~/.config/rex` (`stow rex`); w repo jest tylko `init.lua`. Po zmianie: `rex config check`, potem `rex config reload`.
 
 - **Bindy przeniesione z herdr:** `alt+m` = zoom panelu.
+- **`alt+d` = skok po agentach jak `herdr-agent-jump.sh`:** akcja `agent_jump` cyklicznie po panelach `blocked`, a gdy ich nie ma — `done`, potem `working` (pierwsza niepusta grupa wygrywa), we wszystkich sesjach, licząc od aktualnego panelu. Statusy to te, które programy raportują Rexowi (OSC 7501, np. Claude Code). Podgląd celu bez skoku: `rex do ~/.config/rex/init.lua --action agent_jump dry_run=true`.
 - **`ctrl+hjkl` po panelach jak herdr-splits:** akcja `smart_nav` w `init.lua` sprawdza proces na pierwszym planie — w panelu z nvim/vim przekazuje klawisz do edytora, w pozostałych przełącza panel Rex. Drugą połowę robi `smart-splits.lua` w nvim: na krawędzi splitów woła `rex focus <kierunek>` (bez Remote Control).
 
 ## herdr — automatyczny layout dla worktree
