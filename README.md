@@ -65,6 +65,16 @@ Pakiet `rex/` linkuje cały `~/.config/rex` (`stow rex`); w repo jest tylko `ini
 - **`alt+d` = skok po agentach jak `herdr-agent-jump.sh`:** akcja `agent_jump` cyklicznie po panelach `blocked`, a gdy ich nie ma — `done`, potem `working` (pierwsza niepusta grupa wygrywa), we wszystkich sesjach, licząc od aktualnego panelu. Statusy to te, które programy raportują Rexowi (OSC 7501, np. Claude Code). Podgląd celu bez skoku: `rex do ~/.config/rex/init.lua --action agent_jump dry_run=true`.
 - **`ctrl+hjkl` po panelach jak herdr-splits:** akcja `smart_nav` w `init.lua` sprawdza proces na pierwszym planie — w panelu z nvim/vim przekazuje klawisz do edytora, w pozostałych przełącza panel Rex. Drugą połowę robi `smart-splits.lua` w nvim: na krawędzi splitów woła `rex focus <kierunek>` (bez Remote Control).
 
+## hotkeys — globalne skróty do aplikacji (zamiast Raycasta)
+
+Pakiet `hotkeys/` linkuje `~/.config/hotkeys` (`stow hotkeys`). `hotkeys.swift` czyta `hotkeys.conf` (`alt+r = Slack`), rejestruje skróty przez Carbon `RegisterEventHotKey` (bez uprawnień Accessibility) i na wciśnięcie przełącza na aplikację albo ją uruchamia. Bez zależności — wystarczy `swiftc` z Command Line Tools.
+
+```zsh
+~/.config/hotkeys/install.sh   # kompiluje do ~/.local/bin/hotkeys, zapisuje LaunchAgent i (re)startuje
+```
+
+Odpalaj po każdej zmianie `hotkeys.conf`. Log: `/tmp/hotkeys.log`. Na Polish Pro omijaj litery z polskimi znakami (a c e l n o s x z), a w terminalu skrót przykrywa `alt+<litera>` (np. Rex `alt+d`/`alt+m`, readline `alt+b`/`alt+f`).
+
 ## herdr — automatyczny layout dla worktree
 
 Pakiet `herdr/` dostarcza deklaratywny layout dla [herdr](https://herdr.dev): każdy worktree utworzony przez `herdr worktree create` otwiera się z układem `dev` — edytor `nvim .` po lewej, Claude w prawej kolumnie (35%), shell pod nim. Robi to plugin **workspace-manager**, którego config linkujemy przez stow do kanonicznej ścieżki `~/.config/herdr/plugins/config/herdr-plugin-workspace-manager/config.yml` (linkowany jest tylko `config.yml` — resztę `~/.config/herdr/` tworzy sam herdr).
