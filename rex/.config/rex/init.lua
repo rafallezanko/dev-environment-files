@@ -31,8 +31,12 @@ rex.bind("ctrl+l", "smart_nav", { dir = "right", key = "ctrl+l" })
 -- Priority blocked > done > working (the first non-empty group wins), cycling in
 -- sidebar order starting after the focused pane. Statuses come from what programs
 -- report (OSC 7501), e.g. Claude Code with Rex's hooks.
+-- Unlike Herdr, Rex keeps `done` until the program reports again, so a `done`
+-- pane counts as seen once you leave it (focused while pressing alt+d) and is
+-- skipped until the agent finishes another piece of work.
 local terminal = "com.superlogical.terminal"
 local jump_priority = { "blocked", "done", "working" }
+local seen_done = {} -- block_id -> updated_at of the `done` record already seen
 
 rex.action{
   name  = "agent_jump",
@@ -50,7 +54,7 @@ rex.action{
           local st = rex.block.call(terminal, "program_status",
             { session_id = s.session_id, block_id = b.block_id })
           local states = {}
-          for _, r in ipairs(st and st.records or {}) do states[r.state] = true end
+          for _, r in ipairs(st and st.records or {}) do states[r.state] = r.updated_at or true end
           table.insert(panes, { session_id = s.session_id, window_id = b.window_id,
                                 block_id = b.block_id, states = states })
         end
@@ -59,7 +63,13 @@ rex.action{
 
     local current = 0
     for i, p in ipairs(panes) do
-      if p.block_id == ctx.block_id then current = i end
+      if p.block_id == ctx.block_id then
+        current = i
+        if p.states.done and not args.dry_run then seen_done[p.block_id] = p.states.done end
+      end
+    end
+    for _, p in ipairs(panes) do
+      if p.states.done and p.states.done == seen_done[p.block_id] then p.states.done = nil end
     end
 
     for _, state in ipairs(jump_priority) do
